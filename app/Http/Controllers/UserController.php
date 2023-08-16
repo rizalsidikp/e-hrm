@@ -12,8 +12,13 @@ class UserController extends Controller
      */
     public function index()
     {
+        $breadcrumbs = [
+            [
+                "name" => "Data Pegawai",
+            ]
+        ];
         $users = User::where('role', '!=', 'admin')->get();
-        return view('pages.user-management.index', compact('users'));
+        return view('pages.user-management.index', compact('users', 'breadcrumbs'));
     }
 
     /**
@@ -21,7 +26,16 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $breadcrumbs = [
+            [
+                "name" => "Data Pegawai",
+                "link" => '/user-management'
+            ],
+            [
+                "name" => "Pegawai Baru",
+            ]
+        ];
+        return view('pages.user-management.create', compact('breadcrumbs'));
     }
 
     /**
