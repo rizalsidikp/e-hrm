@@ -51,5 +51,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function hasAnyRole($roles)
+    {
+        return in_array($this->role, $roles);
+    }
+
+    public function absences()
+    {
+        return $this->hasMany(Absence::class, 'user_id');
+    }
+
     use SoftDeletes;
 }

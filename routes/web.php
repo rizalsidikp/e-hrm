@@ -22,6 +22,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
 
+	// for skripsi
+	Route::resource('user-management', \App\Http\Controllers\UserController::class);
+	Route::resource('absence-management', \App\Http\Controllers\AbsenceController::class);
+	// 
+
 	Route::get('/', [HomeController::class, 'home']);
 	Route::get('dashboard', function () {
 		return view('dashboard');
@@ -38,8 +43,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('rtl', function () {
 		return view('rtl');
 	})->name('rtl');
-
-	Route::resource('user-management', \App\Http\Controllers\UserController::class);
 
 	Route::get('tables', function () {
 		return view('tables');

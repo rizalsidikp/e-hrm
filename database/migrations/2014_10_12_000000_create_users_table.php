@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->enum('jenis_kelamin', ['l', 'p'])->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
-            $table->string('alamat')->nullable();
+            $table->text('alamat')->nullable();
             $table->string('no_hp')->nullable();
             $table->enum('status', ["On Job Training", "Kontrak", "Permanen"])->nullable();
             $table->date("mulai_bekerja")->nullable();

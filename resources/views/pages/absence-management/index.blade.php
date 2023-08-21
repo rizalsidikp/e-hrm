@@ -27,12 +27,11 @@
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
-                                <h5 class="mb-0">Semua Data Pegawai</h5>
+                                <h5 class="mb-0">List Izin dan Sakit Pegawai</h5>
                             </div>
-                            <a href="/user-management/create" class="btn bg-gradient-primary btn-sm mb-0"
+                            <a href="/absence-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
-                                Pegawai
-                                Baru</a>
+                                Pengajuan Baru</a>
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -48,17 +47,19 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Nama
                                         </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Email
+                                        <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Status
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Jabatan
+                                            Tanggal Izin
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Selama
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Mulai Bekerja
+                                            Disetujui
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -67,32 +68,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $key => $user)
+                                    @foreach ($absences as $key => $absence)
                                         <tr>
                                             <td class="ps-4">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $key + 1 }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $user->nama }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $absence->user->nama }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
-                                            </td>
-                                            <td class="text-center">
-                                                <p class="text-xs font-weight-bold mb-0">{{ $user->jabatan }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $absence->status }}
+                                                </p>
                                             </td>
                                             <td class="text-center">
                                                 <span
-                                                    class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($user->mulai_bekerja)->format('d F Y') }}
+                                                    class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($absence->tanggal_izin)->format('d F Y') }}
                                                 </span>
                                             </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    @if ($absence->tipe === 'jam')
+                                                        {{ $absence->jumlah_jam }} jam
+                                                    @else
+                                                        {{ $absence->jumlah_jam / 8 }} hari
+                                                    @endif
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="form-check form-switch text-center">
+                                                    <input class="form-check-input mx-auto" type="checkbox"
+                                                        @if ($absence->approved) checked @endif>
+                                                </div>
+                                            </td>
                                             <td class="text-center">
-                                                <a href="/user-management/{{ $user->id }}/edit" class="mx-3"
+                                                <a href="/absence-management/{{ $absence->id }}/edit" class="mx-3"
                                                     data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                                                     <i class="fas fa-user-edit text-secondary"></i>
                                                 </a>
                                                 <i class="fas fa-trash text-secondary cursor-pointer" data-bs-toggle="modal"
-                                                    data-bs-target="#userDeleteModal" data-id="{{ $user->id }}"></i>
+                                                    data-bs-target="#userDeleteModal" data-id="{{ $absence->id }}"></i>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -129,13 +143,13 @@
         </div>
     </div>
 @endsection
+<script type="text/javascript">
+    const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
+        searchable: true,
+        fixedHeight: true
+    });
+</script>
 @section('page-content')
-    <script type="text/javascript">
-        const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
-            searchable: true,
-            fixedHeight: true
-        });
-    </script>
     <script>
         $('#userDeleteModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Tombol yang membuka modal

@@ -18,6 +18,10 @@ class UserController extends Controller
     protected $dataPegawai = "Data Pegawai";
     protected $userManagementLink = "/user-management";
     protected $notFoundMessage = "Data pegawai tidak ditemukan.";
+    public function __construct()
+    {
+        $this->middleware('checkRole:admin');
+    }
     public function index()
     {
         $breadcrumbs = [

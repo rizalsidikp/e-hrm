@@ -71,12 +71,7 @@
     <script src="{{ asset('assets/js/plugins/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/datatables.js') }}"></script>
-    <script type="text/javascript">
-        const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
-            searchable: true,
-            fixedHeight: true
-        });
-    </script>
+    <script src="{{ asset('assets/js/plugins/choices.min.js') }}"></script>
     @stack('rtl')
     @stack('dashboard')
     <script>
