@@ -146,7 +146,7 @@ class AbsenceController extends Controller
     public function approved(Request $request, string $id)
     {
         $request->validate([
-            'approved' => 'required|in:ditolak,disetujui',
+            'approved' => 'required|in:ditolak,disetujui,butuh persetujuan',
         ]);
         $absence = Absence::find($id);
         if (!$absence) {
@@ -156,7 +156,13 @@ class AbsenceController extends Controller
             'approved' => $request->approved,
             'approved_by' => auth()->user()->id
         ]);
-        return redirect($this->absenceManagementLink)->with('success', 'Pengajuan berhasil ' . $request->approved);
+        return redirect($this->absenceManagementLink)->with(
+            'success',
+            $request->approved === "butuh persetujuan" ?
+            'Persetujuan pengajuan berhasil dibatalkan'
+            :
+            'Pengajuan berhasil ' . $request->approved
+        );
     }
     public function pemotongan(Request $request, string $id)
     {

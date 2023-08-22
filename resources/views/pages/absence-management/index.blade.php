@@ -109,9 +109,12 @@
                                                             data-id="{{ $absence->id }}" data-approved="ditolak"></i>
                                                     </div>
                                                 @else
-                                                    <div class="d-flex justify-content-center text-sm">
+                                                    <div class="d-flex justify-content-center text-sm align-items-center">
                                                         <span
-                                                            class="badge badge-sm @if ($absence->approved === 'disetujui') bg-gradient-success @else bg-gradient-secondary @endif">
+                                                            class="badge cursor-pointer badge-sm @if ($absence->approved === 'disetujui') bg-gradient-success @else bg-gradient-secondary @endif"
+                                                            data-bs-toggle="modal" data-bs-target="#absenceModal"
+                                                            data-id="{{ $absence->id }}"
+                                                            data-approved="butuh persetujuan">
                                                             {{ $absence->approved }}
                                                         </span>
                                                     </div>
@@ -212,9 +215,23 @@
             var userId = button.data('id'); // Ambil data user ID dari tombol
             var approved = button.data('approved')
             var modal = $(this);
-            $('#absenceModalLabel').text((approved === 'disetujui' ? 'Setujui' : 'Tolak') + ' Pengajuan')
-            $('#buttonYa').addClass(approved === 'disetujui' ? 'bg-gradient-success' : 'bg-gradient-danger')
-            $('#buttonYa').removeClass(approved === 'disetujui' ? 'bg-gradient-danger' : 'bg-gradient-success')
+            if (approved === "disetujui") {
+                $('#absenceModalLabel').text('Setujui Pengajuan')
+                $('#buttonYa').addClass('bg-gradient-success')
+                $('#buttonYa').removeClass('bg-gradient-danger')
+                $('#buttonYa').removeClass('bg-gradient-info')
+            } else if (approved === "ditolak") {
+                $('#absenceModalLabel').text('Tolak Pengajuan')
+                $('#buttonYa').addClass('bg-gradient-danger')
+                $('#buttonYa').removeClass('bg-gradient-success')
+                $('#buttonYa').removeClass('bg-gradient-info')
+            } else {
+                $('#absenceModalLabel').text('Batalkan Persetujuan Pengajuan')
+                $('#buttonYa').addClass('bg-gradient-info')
+                $('#buttonYa').removeClass('bg-gradient-success')
+                $('#buttonYa').removeClass('bg-gradient-danger')
+            }
+
             var approvedInput = document.getElementById('absence.approved');
             approvedInput.value = approved
             modal.find('#absence-approved-form').attr('action', 'absence-management/' + userId + '/approved');
