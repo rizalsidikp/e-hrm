@@ -42,6 +42,9 @@
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css?v=1.0.3') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/_datatable.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/_datatable-extend.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/_choices.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/_dropzone.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" />
 
 </head>
 
@@ -72,6 +75,8 @@
     <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/datatables.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/choices.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/flatpickr.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/dropzone.min.js') }}"></script>
     @stack('rtl')
     @stack('dashboard')
     <script>

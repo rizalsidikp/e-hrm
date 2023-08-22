@@ -109,6 +109,9 @@
                                 <label for="user.alamat">{{ 'Alamat' }}</label>
                                 <textarea class="form-control" style="resize:none" id="user.alamat" rows="3" placeholder="Jl..."
                                     name="alamat">{{ old('alamat') }}</textarea>
+                                @error('alamat')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="row">
@@ -197,4 +200,13 @@
             </div>
         </div>
     </div>
+@endsection
+@section('page-content')
+    <script>
+        if (document.querySelector('.datepicker')) {
+            flatpickr('.datepicker', {
+
+            });
+        }
+    </script>
 @endsection

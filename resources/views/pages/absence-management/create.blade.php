@@ -5,10 +5,10 @@
         <div class="container-fluid py-4">
             <div class="card">
                 <div class="card-header pb-0 px-3">
-                    <h6 class="mb-0">{{ __('Informasi Pegawai') }}</h6>
+                    <h6 class="mb-0">{{ __('Informasi Pengajuan') }}</h6>
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form action="/user-management" method="POST" role="form text-left">
+                    <form action="/absence-management" method="POST" role="form text-left" enctype="multipart/form-data">
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
@@ -30,159 +30,153 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="user.nama" class="form-control-label">{{ __('Nama Lengkap') }}</label>
-                                    <input class="form-control" type="text" placeholder="John Doe" id="user.nama"
-                                        name="nama" value="{{ old('nama') }}" required>
+                                    <label for="absence.user_id" class="form-control-label">{{ __('Nama Pegawai') }}</label>
+                                    <select class="form-control" id="absence.user_id" name="user_id">
+                                        @foreach ($users as $key => $user)
+                                            <option value="{{ $user->id }}"
+                                                {{ (int) old('user_id') === $user->id ? 'selected' : '' }}>
+                                                {{ $user->nama }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('nama')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.email" class="form-control-label">{{ __('Email') }}</label>
-                                    <input class="form-control" type="email" placeholder="@example.com" id="user.email"
-                                        name="email" value="{{ old('email') }}" required>
-                                    @error('email')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user.jabatan" class="form-control-label">{{ __('Jabatan') }}</label>
-                                    <input class="form-control" type="text" placeholder="Manager" id="user.jabatan"
-                                        name="jabatan" value="{{ old('jabatan') }}" required>
-                                    @error('jabatan')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.jenis_kelamin"
-                                        class="form-control-label">{{ __('Jenis Kelamin') }}</label>
-                                    <select class="form-control" id="user.jenis_kelamin" name="jenis_kelamin">
-                                        <option value="l" {{ old('jenis_kelamin') === 'l' ? 'selected' : '' }}>
-                                            Laki-laki</option>
-                                        <option value="p" {{ old('jenis_kelamin') === 'p' ? 'selected' : '' }}>
-                                            Perempuan</option>
-                                    </select>
-                                    @error('jenis_kelamin')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.tempat_lahir"
-                                        class="form-control-label">{{ __('Tempat Lahir') }}</label>
-                                    <input class="form-control" type="text" placeholder="Jakarta" id="user.tempat_lahir"
-                                        name="tempat_lahir" value="{{ old('tempat_lahir') }}" required>
-                                    @error('tempat_lahir')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.tanggal_lahir"
-                                        class="form-control-label">{{ __('Tanggal Lahir') }}</label>
-                                    <input class="form-control" type="date" id="user.tanggal_lahir" name="tanggal_lahir"
-                                        placeholder="" value="{{ old('tanggal_lahir') }}" required>
-                                    @error('tanggal_lahir')
-                                        <p class="text-danger
-                                        text-xs mt-2">
-                                            {{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="user.alamat">{{ 'Alamat' }}</label>
-                                <textarea class="form-control" style="resize:none" id="user.alamat" rows="3" placeholder="Jl..."
-                                    name="alamat">{{ old('alamat') }}</textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.mulai_bekerja"
-                                        class="form-control-label">{{ __('Mulai Bekerja') }}</label>
-                                    <input class="form-control" type="date" id="user.mulai_bekerja"
-                                        name="mulai_bekerja" placeholder="" value="{{ old('mulai_bekerja') }}" required>
-                                    @error('mulai_bekerja')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.status"
-                                        class="form-control-label">{{ __('Status Pekerjaan') }}</label>
-                                    <select class="form-control" id="user.status" name="status">
-                                        <option value="Kontrak" {{ old('status') === 'Kontrak' ? 'selected' : '' }}>
-                                            Kontrak</option>
-                                        <option value="On Job Training"
-                                            {{ old('status') === 'On Job Training' ? 'selected' : '' }}>On Job Training
-                                        </option>
-                                        <option value="Permanen" {{ old('status') === 'Permanen' ? 'selected' : '' }}>
-                                            Permanen</option>
+                                    <label for="absence.status"
+                                        class="form-control-label">{{ __('Jenis Pengajuan') }}</label>
+                                    <select class="form-control" id="absence.status" name="status">
+                                        <option value="izin" {{ old('status') === 'izin' ? 'selected' : '' }}>
+                                            Izin</option>
+                                        <option value="sakit" {{ old('status') === 'sakit' ? 'selected' : '' }}>
+                                            Sakit</option>
                                     </select>
                                     @error('status')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user.no_hp" class="form-control-label">{{ __('No HP') }}</label>
-                                    <input class="form-control" type="text" placeholder="085273674273"
-                                        id="user.no_hp" name="no_hp" value="{{ old('no_hp') }}">
-                                    @error('no_hp')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.gaji" class="form-control-label">{{ __('Gaji') }}</label>
-                                    <input class="form-control" type="number" id="user.gaji" name="gaji"
-                                        placeholder="4500000" value="{{ old('gaji') }}" required>
-                                    @error('gaji')
+                                    <label for="absence.tipe" class="form-control-label">{{ __('Tipe Pengajuan') }}</label>
+                                    <select class="form-control" id="absence.tipe" name="tipe">
+                                        <option value="hari" {{ old('tipe') === 'hari' ? 'selected' : '' }}>
+                                            Hari</option>
+                                        <option value="jam" {{ old('tipe') === 'jam' ? 'selected' : '' }}>
+                                            Jam</option>
+                                    </select>
+                                    @error('tipe')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
                         </div>
-                        <h6 class="py-4">{{ __('Login Pegawai') }}</h6>
-                        <div class="row">
+                        <div class="row" id="form-tanggal">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user.password" class="form-control-label">{{ __('Password') }}</label>
-                                    <input class="form-control" type="password" id="user.password" name="password"
-                                        placeholder="" required>
-                                    @error('password')
+                                    <label for="absence.tanggal_mulai"
+                                        class="form-control-label">{{ __('Tanggal Mulai') }}</label>
+                                    <input id="absence.tanggal_mulai" name="tanggal_mulai" class="form-control datepicker"
+                                        placeholder="Please select date" type="text" value="{{ old('tanggal_mulai') }}"
+                                        onfocus="focused(this)" onfocusout="defocused(this)" required>
+                                    @error('tanggal_mulai')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user.password_confirmation"
-                                        class="form-control-label">{{ __('Konfirmasi Password') }}</label>
-                                    <input class="form-control" type="password" id="user.password_confirmation"
-                                        name="password_confirmation" placeholder="">
-                                    @error('password_confirmation')
+                                    <label for="absence.tanggal_selesai"
+                                        class="form-control-label">{{ __('Tanggal Selesai') }}</label>
+                                    <input id="absence.tanggal_selesai" name="tanggal_selesai"
+                                        class="form-control datepicker" placeholder="Please select date" type="text"
+                                        value="{{ old('tanggal_selesai') }}" onfocus="focused(this)"
+                                        onfocusout="defocused(this)" required>
+                                    @error('tanggal_selesai')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="form-tanggal-jam">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="absence.tanggal" class="form-control-label">{{ __('Tanggal') }}</label>
+                                    <input id="absence.tanggal" name="tanggal" class="form-control datepicker"
+                                        placeholder="Please select date" type="text" value="{{ old('tanggal') }}"
+                                        onfocus="focused(this)" onfocusout="defocused(this)" required>
+                                    @error('tanggal')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="form-jam" style="display: none">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="absence.jam_mulai"
+                                        class="form-control-label">{{ __('Jam Mulai') }}</label>
+                                    <input id="absence.jam_mulai" name="jam_mulai" class="form-control timepicker"
+                                        placeholder="Please select date" type="text" value="{{ old('jam_mulai') }}"
+                                        onfocus="focused(this)" onfocusout="defocused(this)" required>
+                                    @error('jam_mulai')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="absence.jam_selesai"
+                                        class="form-control-label">{{ __('Jam Selesai') }}</label>
+                                    <input id="absence.jam_selesai" name="jam_selesai" class="form-control timepicker"
+                                        placeholder="Please select date" type="text" value="{{ old('jam_selesai') }}"
+                                        onfocus="focused(this)" onfocusout="defocused(this)" required>
+                                    @error('jam_selesai')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="absence.alasan">{{ 'alasan' }}</label>
+                                <textarea class="form-control" style="resize:none" id="absence.alasan" rows="3"
+                                    placeholder="Alasan Izin / Sakit" name="alasan">{{ old('alasan') }}</textarea>
+                                @error('alasan')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="absence.pemotongan"
+                                        class="form-control-label">{{ __('Pemotongan Gaji') }}</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="pemotongan"
+                                            id="absence.pemotongan" {{ old('pemotongan') ? 'checked' : '' }}>
+                                    </div>
+                                    @error('pemotongan')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="absence.bukti"
+                                        class="form-control-label">{{ __('Bukti Izin / Sakit') }}</label>
+                                    <div action="/" class="form-control border dropzone" id="dropzone">
+                                        <div class="fallback">
+                                        </div>
+                                    </div>
+                                    <input id="absence.bukti" name="bukti" type="hidden" />
+                                    @error('bukti')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -197,4 +191,96 @@
             </div>
         </div>
     </div>
+@endsection
+@section('page-content')
+    <script type="text/javascript">
+        if (document.getElementById('absence.user_id')) {
+            var element = document.getElementById('absence.user_id');
+            const example = new Choices(element, {});
+        }
+    </script>
+    <script>
+        if (document.querySelector('.datepicker')) {
+            flatpickr('.datepicker', {
+
+            });
+        }
+    </script>
+    <script>
+        if (document.querySelector('.timepicker')) {
+            let fp = flatpickr('.timepicker', {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                defaultMinute: 0,
+                minuteIncrement: 0
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        Dropzone.autoDiscover = false;
+        var drop = document.getElementById('dropzone')
+        var myDropzone = new Dropzone(drop, {
+            url: "{{ route('absence.bukti') }}",
+            addRemoveLinks: true,
+            paramName: 'bukti',
+            acceptedFiles: 'image/jpeg,image/png,application/pdf',
+            dictDefaultMessage: 'Seret berkas atau klik di sini untuk mengunggah',
+            dictRemoveFile: 'Hapus berkas',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Menambahkan CSRF token ke dalam header
+            },
+            maxFiles: 1,
+            init: function() {
+                var buktiInput = document.getElementById('absence.bukti');
+                this.on("complete", function(file) {
+                    if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                        if (file.xhr && file.xhr.response) {
+                            var response = JSON.parse(file.xhr.response);
+                            if (response.bukti) {
+                                buktiInput.value = response.bukti;
+                            }
+                        }
+                    }
+                });
+                this.on("addedfile", function(file) {
+                    if (this.files.length > 1) {
+                        this.removeFile(this.files[0]); // Menghapus berkas pertama
+                    }
+                });
+                this.on("error", function(file, errorMessage) {
+                    var errorPreview = document.createElement('div');
+                    errorPreview.classList.add('dz-error-message');
+                    errorPreview.textContent = errorMessage;
+                    file.previewElement.appendChild(errorPreview);
+                    buktiInput.value = null
+                });
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var tipe = document.getElementById('absence.tipe').value;
+            var status = document.getElementById('absence.status').value;
+            handleTipeChange(tipe);
+        });
+
+        document.getElementById('absence.tipe').addEventListener('change', function() {
+            var tipe = this.value;
+            handleTipeChange(tipe);
+        });
+
+        function handleTipeChange(tipe) {
+            if (tipe === 'hari') {
+                document.getElementById('form-tanggal').style.display = 'flex';
+                document.getElementById('form-jam').style.display = 'none';
+                document.getElementById('form-tanggal-jam').style.display = 'none';
+            } else if (tipe === 'jam') {
+                document.getElementById('form-tanggal').style.display = 'none';
+                document.getElementById('form-jam').style.display = 'flex';
+                document.getElementById('form-tanggal-jam').style.display = 'flex';
+            }
+        }
+    </script>
 @endsection

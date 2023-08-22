@@ -85,7 +85,7 @@
                                                     class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($absence->tanggal_izin)->format('d F Y') }}
                                                 </span>
                                             </td>
-                                            <td>
+                                            <td style="padding-left: 1.5rem">
                                                 <p class="text-xs font-weight-bold mb-0">
                                                     @if ($absence->tipe === 'jam')
                                                         {{ $absence->jumlah_jam }} jam
@@ -143,13 +143,13 @@
         </div>
     </div>
 @endsection
-<script type="text/javascript">
-    const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
-        searchable: true,
-        fixedHeight: true
-    });
-</script>
 @section('page-content')
+    <script type="text/javascript">
+        const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
+            searchable: true,
+            fixedHeight: true
+        });
+    </script>
     <script>
         $('#userDeleteModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Tombol yang membuka modal

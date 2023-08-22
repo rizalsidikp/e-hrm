@@ -10,6 +10,7 @@ class Absence extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'status',
         'tipe',
         'tanggal_mulai',

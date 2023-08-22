@@ -114,7 +114,7 @@ class UserController extends Controller
         ];
         $user = User::where('role', 'user')->find($id);
         if (!$user) {
-            return redirect($this->userManagementLink)->with('error', );
+            return redirect($this->userManagementLink)->with('error', $this->notFoundMessage);
         }
 
         return view('pages.user-management.edit', compact('user', 'breadcrumbs'));
