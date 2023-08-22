@@ -138,6 +138,7 @@
                 select: [0, 3, 5],
                 sortable: false
             }, ],
+            perPageSelect: [10, 25, 50, 100, 200]
         });
     </script>
     <script>

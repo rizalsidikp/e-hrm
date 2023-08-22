@@ -161,7 +161,7 @@ class UserController extends Controller
         $user->role = $request->role ? 'admin' : 'user';
         $user->save();
 
-        return redirect($this->userManagementLink)->with('success', 'Data pegawai berhasil diubah.');
+        return redirect($this->userManagementLink)->with('success', 'Data pegawai berhasil diperbarui.');
     }
 
     /**
@@ -170,7 +170,6 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::where('id', '!=', 1)->find($id);
-
         if ($user) {
             $user->delete(); // Soft delete data
             return redirect()->back()->with('success', 'Data pegawai berhasil dihapus.');

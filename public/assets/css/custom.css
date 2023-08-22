@@ -1,3 +1,10 @@
 .timepicker{
     background-color: #fff !important;
 }
+.custom-disabled{
+    background-color: #fff !important;
+}
+.custom-text-hover:hover{
+    color: #17c1e8;
+    transition: 0.3s all ease;
+}

@@ -225,8 +225,8 @@
             url: "{{ route('absence.bukti') }}",
             addRemoveLinks: true,
             paramName: 'bukti',
-            acceptedFiles: 'image/jpeg,image/png,application/pdf',
-            dictDefaultMessage: 'Seret berkas atau klik di sini untuk mengunggah',
+            acceptedFiles: 'image/jpeg,image/png,image/jpg',
+            dictDefaultMessage: 'Seret berkas atau klik di sini untuk mengunggah <br/> .png | .jpg | .jpeg',
             dictRemoveFile: 'Hapus berkas',
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}' // Menambahkan CSRF token ke dalam header

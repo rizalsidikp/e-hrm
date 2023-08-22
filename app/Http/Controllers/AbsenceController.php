@@ -158,36 +158,40 @@ class AbsenceController extends Controller
         ]);
         return redirect($this->absenceManagementLink)->with('success', 'Pengajuan berhasil ' . $request->approved);
     }
+    public function pemotongan(Request $request, string $id)
+    {
+        $request->validate([
+            'pemotongan' => 'required|in:1,0',
+        ]);
+        $absence = Absence::find($id);
+        if (!$absence) {
+            return redirect($this->absenceManagementLink)->with('error', 'Pengajuan tidak ditemukan');
+        }
+        $absence->update([
+            'pemotongan' => !$request->pemotongan
+        ]);
+        return redirect($this->absenceManagementLink)->with('success', 'Pengajuan berhasil diperbarui');
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
-    }
+        $breadcrumbs = [
+            [
+                "name" => $this->dataAbsensi,
+                "link" => $this->absenceManagementLink
+            ],
+            [
+                "name" => "Detail Data Pegawai",
+            ]
+        ];
+        $absence = Absence::find($id);
+        if (!$absence) {
+            return redirect($this->absenceManagementLink)->with('error', 'Pengajuan tidak ditemukan.');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('pages.absence-management.show', compact('absence', 'breadcrumbs'));
     }
 }

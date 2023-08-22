@@ -63,6 +63,10 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Pemotongan
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Action
                                         </th>
                                     </tr>
@@ -105,12 +109,26 @@
                                                             data-id="{{ $absence->id }}" data-approved="ditolak"></i>
                                                     </div>
                                                 @else
-                                                    <p class="text-xs font-weight-bold mb-0 text-capitalize text-center">
-                                                        {{ $absence->approved }}</p>
+                                                    <div class="d-flex justify-content-center text-sm">
+                                                        <span
+                                                            class="badge badge-sm @if ($absence->approved === 'disetujui') bg-gradient-success @else bg-gradient-secondary @endif">
+                                                            {{ $absence->approved }}
+                                                        </span>
+                                                    </div>
                                                 @endif
                                             </td>
+                                            <td>
+                                                <div
+                                                    class="form-check form-switch d-flex justify-content-center absence_pemotongan">
+                                                    <input class="form-check-input absence_pemotongan" type="checkbox"
+                                                        data-bs-toggle="modal" data-bs-target="#absencePotonganModal"
+                                                        data-id="{{ $absence->id }}"
+                                                        data-pemotongan="{{ $absence->pemotongan }}"
+                                                        {{ $absence->pemotongan ? 'checked' : '' }}>
+                                                </div>
+                                            </td>
                                             <td class="text-center">
-                                                <a href="/absence-management/{{ $absence->id }}/show" class="mx-3"
+                                                <a href="/absence-management/{{ $absence->id }}" class="mx-3"
                                                     data-bs-toggle="tooltip" data-bs-original-title="Lihat Absensi">
                                                     <i class="fas fa-eye text-secondary"></i>
                                                 </a>
@@ -150,6 +168,31 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="absencePotonganModal" tabindex="-1" role="dialog"
+        aria-labelledby="absencePotonganModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-normal" id="absencePotonganModalLabel">Ubah data pemotongan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tidak</button>
+                    <form id="absence-pemotongan-form" action="" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="pemotongan" id="absence.pemotongan" value="">
+                        <button type="submit" class="btn bg-gradient-success">Ya</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('page-content')
     <script type="text/javascript">
@@ -160,6 +203,7 @@
                 select: [0, 2, 4, 5, 6],
                 sortable: false
             }, ],
+            perPageSelect: [10, 25, 50, 100, 200]
         });
     </script>
     <script>
@@ -173,8 +217,25 @@
             $('#buttonYa').removeClass(approved === 'disetujui' ? 'bg-gradient-danger' : 'bg-gradient-success')
             var approvedInput = document.getElementById('absence.approved');
             approvedInput.value = approved
-            console.log(approvedInput)
             modal.find('#absence-approved-form').attr('action', 'absence-management/' + userId + '/approved');
         });
+    </script>
+    <script>
+        $('#absencePotonganModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); // Tombol yang membuka modal
+            var userId = button.data('id'); // Ambil data user ID dari tombol
+            var pemotongan = button.data('pemotongan')
+            var modal = $(this);
+            var pemotonganInput = document.getElementById('absence.pemotongan');
+            pemotonganInput.value = pemotongan
+            modal.find('#absence-pemotongan-form').attr('action', 'absence-management/' + userId + '/pemotongan');
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.absence_pemotongan').click(function(event) {
+                event.preventDefault()
+            })
+        })
     </script>
 @endsection
