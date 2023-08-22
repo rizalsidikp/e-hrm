@@ -171,6 +171,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="user.role"
+                                        class="form-control-label">{{ __('Jadikan Sebagai Admin') }}</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="role" id="user.role"
+                                            {{ old('role') === 'on' || $user->role === 'admin' ? 'checked' : '' }}>
+                                    </div>
+                                    @error('role')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                         <h6 class="py-4">{{ __('Login Pegawai') }}</h6>
                         <div class="row">
                             <div class="col-md-4">

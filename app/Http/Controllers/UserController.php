@@ -18,6 +18,8 @@ class UserController extends Controller
     protected $dataPegawai = "Data Pegawai";
     protected $userManagementLink = "/user-management";
     protected $notFoundMessage = "Data pegawai tidak ditemukan.";
+    protected $requiredWithMax50 = "required|max:50";
+    protected $requiredWithDate = "required|date";
     public function __construct()
     {
         $this->middleware('checkRole:admin');
@@ -29,7 +31,7 @@ class UserController extends Controller
                 "name" => $this->dataPegawai,
             ]
         ];
-        $users = User::where('role', '!=', 'admin')->get();
+        $users = User::where('id', '!=', 1)->get();
         return view('pages.user-management.index', compact('users', 'breadcrumbs'));
     }
 
@@ -56,46 +58,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $max50 = 'max:50';
-        $attributes = request()->validate([
-            'nama' => ['required', 'max:100'],
-            'email' => ['required', 'email', $max50, Rule::unique('users')],
-            'jabatan' => ['required', $max50],
-            'jenis_kelamin' => ['required', 'in:l,p'],
-            'tempat_lahir' => ['required', $max50],
-            'tanggal_lahir' => ['required', 'date'],
-            'alamat' => ['max:255'],
-            'no_hp' => ['max:20'],
-            'status' => ['required', 'in:On Job Training,Kontrak,Permanen'],
-            'mulai_bekerja' => ['required', 'date'],
-            'gaji' => ['required', 'numeric'],
-            'password' => ['required', 'min:8', 'confirmed']
+        $request->validate([
+            'nama' => 'required|max:100',
+            'email' => 'required|email|max:50|unique:users,email',
+            'jabatan' => $this->requiredWithMax50,
+            'jenis_kelamin' => 'required|in:l,p',
+            'tempat_lahir' => $this->requiredWithMax50,
+            'tanggal_lahir' => $this->requiredWithDate,
+            'alamat' => 'max:255',
+            'no_hp' => 'max:20',
+            'status' => 'required|in:On Job Training,Kontrak,Permanen',
+            'mulai_bekerja' => $this->requiredWithDate,
+            'gaji' => 'required|numeric',
+            'role' => 'in:on',
+            'password' => 'required|min:8|confirmed'
         ]);
         $user = new User();
-        $user->nama = $attributes['nama'];
-        $user->email = $attributes['email'];
-        $user->password = Hash::make($attributes['password']); // Ingat untuk mengenkripsi password
-        $user->jabatan = $attributes['jabatan'];
-        $user->jenis_kelamin = $attributes['jenis_kelamin'];
-        $user->tempat_lahir = $attributes['tempat_lahir'];
-        $user->tanggal_lahir = $attributes['tanggal_lahir'];
-        $user->alamat = $attributes['alamat'];
-        $user->no_hp = $attributes['no_hp'];
-        $user->status = $attributes['status'];
-        $user->mulai_bekerja = $attributes['mulai_bekerja'];
-        $user->gaji = $attributes['gaji'];
-        $user->role = 'user';
+        $user->nama = $request->nama;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->jabatan = $request->jabatan;
+        $user->jenis_kelamin = $request->jenis_kelamin;
+        $user->tempat_lahir = $request->tempat_lahir;
+        $user->tanggal_lahir = $request->tanggal_lahir;
+        $user->alamat = $request->alamat;
+        $user->no_hp = $request->no_hp;
+        $user->status = $request->status;
+        $user->mulai_bekerja = $request->mulai_bekerja;
+        $user->gaji = $request->gaji;
+        $user->role = $request->role ? 'admin' : 'user';
         $user->save();
 
         return redirect($this->userManagementLink)->with('success', 'Data pegawai berhasil ditambah');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -112,7 +106,7 @@ class UserController extends Controller
                 "name" => "Ubah Data Pegawai",
             ]
         ];
-        $user = User::where('role', 'user')->find($id);
+        $user = User::where('id', '!=', 1)->find($id);
         if (!$user) {
             return redirect($this->userManagementLink)->with('error', $this->notFoundMessage);
         }
@@ -125,26 +119,25 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::find($id);
+        $user = User::where('id', '!=', 1)->find($id);
         if (!$user) {
             return redirect($this->userManagementLink)->with('error', $this->notFoundMessage);
         }
-
-        $max50 = 'max:50';
-        $attributes = request()->validate([
-            'nama' => ['required', 'max:100'],
-            'email' => ['required', 'email', $max50, 'unique:users,email,' . $id],
-            'jabatan' => ['required', $max50],
-            'jenis_kelamin' => ['required', 'in:l,p'],
-            'tempat_lahir' => ['required', $max50],
-            'tanggal_lahir' => ['required', 'date'],
-            'alamat' => ['max:255'],
-            'no_hp' => ['max:20'],
-            'status' => ['required', 'in:On Job Training,Kontrak,Permanen'],
-            'mulai_bekerja' => ['required', 'date'],
-            'gaji' => ['required', 'numeric'],
-            'current_password' => ['nullable', 'string'],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        $request->validate([
+            'nama' => 'required|max:100',
+            'email' => 'required|email|max:50|unique:users,email,' . $id,
+            'jabatan' => $this->requiredWithMax50,
+            'jenis_kelamin' => 'required|in:l,p',
+            'tempat_lahir' => $this->requiredWithMax50,
+            'tanggal_lahir' => $this->requiredWithDate,
+            'alamat' => 'max:255',
+            'no_hp' => 'max:20',
+            'status' => 'required|in:On Job Training,Kontrak,Permanen',
+            'mulai_bekerja' => $this->requiredWithDate,
+            'gaji' => 'required|numeric',
+            'role' => 'in:on',
+            'current_password' => 'nullable|string',
+            'password' => 'nullable|string|min:8|confirmed',
         ]);
 
         if ($request->filled('current_password') && !Hash::check($request->current_password, $user->password)) {
@@ -152,19 +145,20 @@ class UserController extends Controller
         }
 
         if ($request->filled('password')) {
-            $user->password = Hash::make($attributes['password']);
+            $user->password = Hash::make($request->password);
         }
-        $user->nama = $attributes['nama'];
-        $user->email = $attributes['email'];
-        $user->jabatan = $attributes['jabatan'];
-        $user->jenis_kelamin = $attributes['jenis_kelamin'];
-        $user->tempat_lahir = $attributes['tempat_lahir'];
-        $user->tanggal_lahir = $attributes['tanggal_lahir'];
-        $user->alamat = $attributes['alamat'];
-        $user->no_hp = $attributes['no_hp'];
-        $user->status = $attributes['status'];
-        $user->mulai_bekerja = $attributes['mulai_bekerja'];
-        $user->gaji = $attributes['gaji'];
+        $user->nama = $request->nama;
+        $user->email = $request->email;
+        $user->jabatan = $request->jabatan;
+        $user->jenis_kelamin = $request->jenis_kelamin;
+        $user->tempat_lahir = $request->tempat_lahir;
+        $user->tanggal_lahir = $request->tanggal_lahir;
+        $user->alamat = $request->alamat;
+        $user->no_hp = $request->no_hp;
+        $user->status = $request->status;
+        $user->mulai_bekerja = $request->mulai_bekerja;
+        $user->gaji = $request->gaji;
+        $user->role = $request->role ? 'admin' : 'user';
         $user->save();
 
         return redirect($this->userManagementLink)->with('success', 'Data pegawai berhasil diubah.');
@@ -175,7 +169,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::where('role', 'user')->find($id);
+        $user = User::where('id', '!=', 1)->find($id);
 
         if ($user) {
             $user->delete(); // Soft delete data

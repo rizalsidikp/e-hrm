@@ -94,8 +94,8 @@
                                 <div class="form-group">
                                     <label for="user.tanggal_lahir"
                                         class="form-control-label">{{ __('Tanggal Lahir') }}</label>
-                                    <input class="form-control" type="date" id="user.tanggal_lahir" name="tanggal_lahir"
-                                        placeholder="" value="{{ old('tanggal_lahir') }}" required>
+                                    <input class="form-control datepicker" type="date" id="user.tanggal_lahir"
+                                        name="tanggal_lahir" placeholder="" value="{{ old('tanggal_lahir') }}" required>
                                     @error('tanggal_lahir')
                                         <p class="text-danger
                                         text-xs mt-2">
@@ -119,7 +119,7 @@
                                 <div class="form-group">
                                     <label for="user.mulai_bekerja"
                                         class="form-control-label">{{ __('Mulai Bekerja') }}</label>
-                                    <input class="form-control" type="date" id="user.mulai_bekerja"
+                                    <input class="form-control datepicker" type="date" id="user.mulai_bekerja"
                                         name="mulai_bekerja" placeholder="" value="{{ old('mulai_bekerja') }}" required>
                                     @error('mulai_bekerja')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -162,6 +162,21 @@
                                     <input class="form-control" type="number" id="user.gaji" name="gaji"
                                         placeholder="4500000" value="{{ old('gaji') }}" required>
                                     @error('gaji')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="user.role"
+                                        class="form-control-label">{{ __('Jadikan Sebagai Admin') }}</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="role" id="user.role"
+                                            {{ old('role') === 'on' ? 'checked' : '' }}>
+                                    </div>
+                                    @error('role')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>

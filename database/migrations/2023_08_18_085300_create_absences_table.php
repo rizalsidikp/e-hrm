@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->time('jam_selesai')->nullable();
             $table->integer('jumlah_jam');
             $table->text('alasan');
-            $table->boolean('approved')->default(false);
+            $table->enum('approved', ['butuh persetujuan', 'disetujui', 'ditolak'])->default('butuh persetujuan');
             $table->unsignedBigInteger('approved_by')->nullable();
             $table->boolean('pemotongan')->default(true);
             $table->text('bukti')->nullable();

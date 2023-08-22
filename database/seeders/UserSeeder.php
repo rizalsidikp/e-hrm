@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
                 'no_hp' => '',
                 'status' => 'Permanen',
                 'mulai_bekerja' => '2021-09-21',
-                'gaji' => 4150930,                
+                'gaji' => 4150930,
                 'email' => 'user1@gmail.com',
                 'password' => Hash::make('secret'),
                 'role' => 'user',
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
                 'gaji' => 6500000,
                 'email' => 'user2@gmail.com',
                 'password' => Hash::make('secret'),
-                'role' => 'user',
+                'role' => 'admin',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -66,7 +66,7 @@ class UserSeeder extends Seeder
                 'gaji' => 4150930,
                 'email' => 'user3@gmail.com',
                 'password' => Hash::make('secret'),
-                'role' => 'user',
+                'role' => 'admin',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -84,7 +84,7 @@ class UserSeeder extends Seeder
                 'gaji' => 4150930,
                 'email' => 'user4@gmail.com',
                 'password' => Hash::make('secret'),
-                'role' => 'user',
+                'role' => 'admin',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
