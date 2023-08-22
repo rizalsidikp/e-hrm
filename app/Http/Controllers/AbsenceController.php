@@ -107,7 +107,7 @@ class AbsenceController extends Controller
             'jam_selesai' => $request->tipe === 'hari' ? null : $request->jam_selesai,
             'jumlah_jam' => $jumlahJam,
             'alasan' => $request->alasan,
-            'approved' => Auth::user()->role === 'admin' ? true : false,
+            'approved' => Auth::user()->role === 'admin' ? 'disetujui' : 'butuh persetujuan',
             'approved_by' => Auth::user()->role === 'admin' ? Auth::user()->id : null,
             'pemotongan' => $request->pemotongan ? true : false,
             'bukti' => $isValidFile ? $request->bukti : null,
@@ -141,6 +141,22 @@ class AbsenceController extends Controller
             }
         }
         return response()->json(['message' => 'Gagal mengunggah berkas.'], 400);
+    }
+
+    public function approved(Request $request, string $id)
+    {
+        $request->validate([
+            'approved' => 'required|in:ditolak,disetujui',
+        ]);
+        $absence = Absence::find($id);
+        if (!$absence) {
+            return redirect($this->absenceManagementLink)->with('error', 'Pengajuan tidak ditemukan');
+        }
+        $absence->update([
+            'approved' => $request->approved,
+            'approved_by' => auth()->user()->id
+        ]);
+        return redirect($this->absenceManagementLink)->with('success', 'Pengajuan berhasil ' . $request->approved);
     }
 
     /**

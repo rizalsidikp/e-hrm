@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user-management', \App\Http\Controllers\UserController::class);
 	Route::resource('absence-management', \App\Http\Controllers\AbsenceController::class);
 	Route::post('absence-management/bukti', [\App\Http\Controllers\AbsenceController::class, 'uploadBukti'])->name('absence.bukti');
+	Route::put('absence-management/{id}/approved', [\App\Http\Controllers\AbsenceController::class, 'approved'])->name('absence.approved');
+
 
 	// 
 

@@ -133,7 +133,11 @@
     <script type="text/javascript">
         const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
             searchable: true,
-            fixedHeight: true
+            fixedHeight: true,
+            columns: [{
+                select: [0, 3, 5],
+                sortable: false
+            }, ],
         });
     </script>
     <script>

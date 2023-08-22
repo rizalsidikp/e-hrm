@@ -59,7 +59,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Disetujui
+                                            Persetujuan
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -95,18 +95,25 @@
                                                 </p>
                                             </td>
                                             <td>
-                                                <div class="form-check form-switch text-center">
-                                                    <input class="form-check-input mx-auto" type="checkbox"
-                                                        @if ($absence->approved) checked @endif>
-                                                </div>
+                                                @if ($absence->approved === 'butuh persetujuan')
+                                                    <div class="text-center">
+                                                        <i class="fas fa-check-circle text-success cursor-pointer mx-1"
+                                                            data-bs-toggle="modal" data-bs-target="#absenceModal"
+                                                            data-id="{{ $absence->id }}" data-approved="disetujui"></i>
+                                                        <i class="fas fa-times-circle text-danger cursor-pointer mx-1"
+                                                            data-bs-toggle="modal" data-bs-target="#absenceModal"
+                                                            data-id="{{ $absence->id }}" data-approved="ditolak"></i>
+                                                    </div>
+                                                @else
+                                                    <p class="text-xs font-weight-bold mb-0 text-capitalize text-center">
+                                                        {{ $absence->approved }}</p>
+                                                @endif
                                             </td>
                                             <td class="text-center">
-                                                <a href="/absence-management/{{ $absence->id }}/edit" class="mx-3"
-                                                    data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                                    <i class="fas fa-user-edit text-secondary"></i>
+                                                <a href="/absence-management/{{ $absence->id }}/show" class="mx-3"
+                                                    data-bs-toggle="tooltip" data-bs-original-title="Lihat Absensi">
+                                                    <i class="fas fa-eye text-secondary"></i>
                                                 </a>
-                                                <i class="fas fa-trash text-secondary cursor-pointer" data-bs-toggle="modal"
-                                                    data-bs-target="#userDeleteModal" data-id="{{ $absence->id }}"></i>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -118,12 +125,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="userDeleteModal" tabindex="-1" role="dialog" aria-labelledby="userDeleteModalLabel"
+    <div class="modal fade" id="absenceModal" tabindex="-1" role="dialog" aria-labelledby="absenceModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-normal" id="userDeleteModalLabel">Hapus Data Pegawai</h5>
+                    <h5 class="modal-title font-weight-normal" id="absenceModalLabel">Label</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -133,10 +140,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Tidak</button>
-                    <form id="user-delete-form" action="" method="POST">
+                    <form id="absence-approved-form" action="" method="POST">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn bg-gradient-primary">Ya</button>
+                        @method('PUT')
+                        <input type="hidden" name="approved" id="absence.approved" value="">
+                        <button type="submit" class="btn" id="buttonYa">Ya</button>
                     </form>
                 </div>
             </div>
@@ -147,15 +155,26 @@
     <script type="text/javascript">
         const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
             searchable: true,
-            fixedHeight: true
+            fixedHeight: true,
+            columns: [{
+                select: [0, 2, 4, 5, 6],
+                sortable: false
+            }, ],
         });
     </script>
     <script>
-        $('#userDeleteModal').on('show.bs.modal', function(event) {
+        $('#absenceModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Tombol yang membuka modal
             var userId = button.data('id'); // Ambil data user ID dari tombol
+            var approved = button.data('approved')
             var modal = $(this);
-            modal.find('#user-delete-form').attr('action', 'user-management/' + userId);
+            $('#absenceModalLabel').text((approved === 'disetujui' ? 'Setujui' : 'Tolak') + ' Pengajuan')
+            $('#buttonYa').addClass(approved === 'disetujui' ? 'bg-gradient-success' : 'bg-gradient-danger')
+            $('#buttonYa').removeClass(approved === 'disetujui' ? 'bg-gradient-danger' : 'bg-gradient-success')
+            var approvedInput = document.getElementById('absence.approved');
+            approvedInput.value = approved
+            console.log(approvedInput)
+            modal.find('#absence-approved-form').attr('action', 'absence-management/' + userId + '/approved');
         });
     </script>
 @endsection
