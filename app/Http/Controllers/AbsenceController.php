@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absence;
+use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,8 @@ class AbsenceController extends Controller
             ]
         ];
         $absences = Absence::with(['user', 'userApproved'])->orderBy("id", "desc")->get();
-        return view('pages.absence-management.index', compact('absences', 'breadcrumbs'));
+        $attendances = Attendance::with(['user'])->orderBy("id", "desc")->get();
+        return view('pages.absence-management.index', compact('absences', 'attendances', 'breadcrumbs'));
     }
 
     /**

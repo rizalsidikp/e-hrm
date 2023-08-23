@@ -143,6 +143,71 @@
                         </div>
                     </div>
                 </div>
+                <div class="card mb-4 mx-4">
+                    <div class="card-header pb-0">
+                        <div class="d-flex flex-row justify-content-between">
+                            <div>
+                                <h5 class="mb-0">Data Kehadiran Pegawai</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0" id="datatable-attendance">
+                                <caption></caption>
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                            style="width:20px">
+                                            No
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Tanggal
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Nama
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Tipe Kehadiran
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Jam
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($attendances as $key => $attendance)
+                                        <tr>
+                                            <td class="ps-4">
+                                                <p class="text-xs font-weight-bold mb-0">{{ $key + 1 }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs text-center font-weight-bold mb-0">
+                                                    {{ $attendance->tanggal }}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $attendance->user->nama }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs text-center font-weight-bold mb-0">
+                                                    {{ $attendance->tipe }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs text-center font-weight-bold mb-0">{{ $attendance->jam }}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -203,7 +268,18 @@
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: [0, 2, 4, 5, 6],
+                select: [0, 2, 4, 5, 6, 7],
+                sortable: false
+            }, ],
+            perPageSelect: [10, 25, 50, 100, 200]
+        });
+    </script>
+    <script type="text/javascript">
+        const dataTableAttendance = new simpleDatatables.DataTable("#datatable-attendance", {
+            searchable: true,
+            fixedHeight: true,
+            columns: [{
+                select: [0],
                 sortable: false
             }, ],
             perPageSelect: [10, 25, 50, 100, 200]
