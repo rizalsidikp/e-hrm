@@ -8,3 +8,9 @@
     color: #17c1e8;
     transition: 0.3s all ease;
 }
+.custom-i-sm{
+    top: 0 !important;
+}
+.dataTable-sorter::before, .dataTable-sorter::after{
+    right: -12px;
+}

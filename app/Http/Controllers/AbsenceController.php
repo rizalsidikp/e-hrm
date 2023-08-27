@@ -17,6 +17,11 @@ class AbsenceController extends Controller
      */
     protected $dataAbsensi = "Data Absensi";
     protected $absenceManagementLink = "/absence-management";
+
+    public function __construct()
+    {
+        $this->middleware('checkRole:admin');
+    }
     public function index()
     {
         $breadcrumbs = [
@@ -25,8 +30,7 @@ class AbsenceController extends Controller
             ]
         ];
         $absences = Absence::with(['user', 'userApproved'])->orderBy("id", "desc")->get();
-        $attendances = Attendance::with(['user'])->orderBy("id", "desc")->get();
-        return view('pages.absence-management.index', compact('absences', 'attendances', 'breadcrumbs'));
+        return view('pages.absence-management.index', compact('absences', 'breadcrumbs'));
     }
 
     /**
@@ -44,7 +48,7 @@ class AbsenceController extends Controller
                 "name" => "Pengajuan Baru",
             ]
         ];
-        $users = User::where('role', 'user')->get();
+        $users = User::where('id', '!=', '1')->get();
         return view('pages.absence-management.create', compact('breadcrumbs', 'users'));
     }
 

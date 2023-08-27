@@ -27,7 +27,7 @@
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
-                                <h5 class="mb-0">Semua Data Pegawai</h5>
+                                <h5 class="mb-0">Daftar Pegawai</h5>
                             </div>
                             <a href="/user-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;

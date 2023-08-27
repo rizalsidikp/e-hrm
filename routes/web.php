@@ -23,19 +23,18 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth'], function () {
 
 	// for skripsi
+	Route::resource('dashboard', \App\Http\Controllers\DashboardController::class)->only(['index', 'update']);
 	Route::resource('user-management', \App\Http\Controllers\UserController::class)->except(['show']);
 	Route::resource('absence-management', \App\Http\Controllers\AbsenceController::class)->except(['edit', 'update', 'destroy']);
 	Route::post('absence-management/bukti', [\App\Http\Controllers\AbsenceController::class, 'uploadBukti'])->name('absence.bukti');
 	Route::put('absence-management/{id}/approved', [\App\Http\Controllers\AbsenceController::class, 'approved'])->name('absence.approved');
 	Route::put('absence-management/{id}/pemotongan', [\App\Http\Controllers\AbsenceController::class, 'pemotongan'])->name('absence.pemotongan');
+	Route::resource('overtime-management', \App\Http\Controllers\OvertimeController::class)->only(['index', 'create', 'store']);
 
 
 	// 
 
 	Route::get('/', [HomeController::class, 'home']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
 
 	Route::get('billing', function () {
 		return view('billing');
@@ -68,9 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store']);
-	Route::get('/login', function () {
-		return view('dashboard');
-	})->name('sign-up');
+	Route::get('login', function () {
+		dd("logins");
+		return redirect('/dashboard');
+	})->name('login');
 });
 
 

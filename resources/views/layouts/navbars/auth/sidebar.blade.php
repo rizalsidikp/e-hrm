@@ -1,9 +1,33 @@
+@php
+    $sectionMenu = [
+        [
+            'section' => 'Menu Admin',
+            'menus' => [
+                [
+                    'label' => 'Data Pegawai',
+                    'icon' => 'fa-users',
+                    'url' => 'user-management',
+                ],
+                [
+                    'label' => 'Absensi Pegawai',
+                    'icon' => 'fa-outdent',
+                    'url' => 'absence-management',
+                ],
+                [
+                    'label' => 'Lembur Pegawai',
+                    'icon' => 'fa-business-time',
+                    'url' => 'overtime-management',
+                ],
+            ],
+        ],
+    ];
+@endphp
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
     id="sidenav-main">
     <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        <i class="fas custom-i-sm fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
-        <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="{{ route('dashboard') }}">
+        <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="/dashboard">
             <img src="{{ asset('assets/img/logo-ct.png') }}" class="navbar-brand-img h-100" alt="...">
             <span class="ms-3 font-weight-bold">Soft UI Dashboard Laravel</span>
         </a>
@@ -37,69 +61,26 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item mt-2">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Laravel Examples</h6>
-            </li>
-            <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::segment(1) === 'user-management' ? 'active' : '' }}"
-                    href="{{ url('user-management') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-users ps-2 pe-2 text-center text-dark {{ Request::segment(1) === 'user-management' ? 'text-white' : 'text-dark' }} "
-                            aria-hidden="true"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Data Pegawai</span>
-                </a>
-            </li>
-            <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::segment(1) === 'absence-management' ? 'active' : '' }}"
-                    href="{{ url('absence-management') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-clock ps-2 pe-2 text-center text-dark {{ Request::segment(1) === 'absence-management' ? 'text-white' : 'text-dark' }} "
-                            aria-hidden="true"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Absensi Pegawai</span>
-                </a>
-            </li>
-            <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::segment(1) === 'training-management' ? 'active' : '' }}"
-                    href="{{ url('training-management') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-clipboard-list ps-2 pe-2 text-center text-dark {{ Request::segment(1) === 'training-management' ? 'text-white' : 'text-dark' }} "
-                            aria-hidden="true"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Menajemen Pelatihan</span>
-                </a>
-            </li>
-            <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::segment(1) === 'information-management' ? 'active' : '' }}"
-                    href="{{ url('information-management') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-newspaper ps-2 pe-2 text-center text-dark {{ Request::segment(1) === 'information-management' ? 'text-white' : 'text-dark' }} "
-                            aria-hidden="true"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Menajemen Informasi</span>
-                </a>
-            </li>
-            <li class="nav-item pb-2">
-                <a class="nav-link {{ Request::segment(1) === 'salary-management' ? 'active' : '' }}"
-                    href="{{ url('salary-management') }}">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i style="font-size: 1rem;"
-                            class="fas fa-lg fa-money-check ps-2 pe-2 text-center text-dark {{ Request::segment(1) === 'salary-management' ? 'text-white' : 'text-dark' }} "
-                            aria-hidden="true"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Informasi Penggajian</span>
-                </a>
-            </li>
+            @foreach ($sectionMenu as $section)
+                <li class="nav-item mt-2">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">{{ $section['section'] }}
+                    </h6>
+                </li>
+                @foreach ($section['menus'] as $menu)
+                    <li class="nav-item pb-2">
+                        <a class="nav-link {{ Request::segment(1) === $menu['url'] ? 'active' : '' }}"
+                            href="{{ url($menu['url']) }}">
+                            <div
+                                class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i style="font-size: 1rem;"
+                                    class="fas custom-i-sm fa-lg {{ $menu['icon'] }} ps-2 pe-2 text-center text-dark {{ Request::segment(1) === $menu['url'] ? 'text-white' : 'text-dark' }} "
+                                    aria-hidden="true"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">{{ $menu['label'] }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            @endforeach
             <li class="nav-item mt-2">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Example pages</h6>
             </li>
