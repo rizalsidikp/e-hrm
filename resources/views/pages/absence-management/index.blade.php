@@ -1,5 +1,4 @@
 @extends('layouts.user_type.auth')
-
 @section('content')
     <div>
         <div class="row">
@@ -29,7 +28,7 @@
                             <div>
                                 <h5 class="mb-0">Daftar Izin dan Sakit Pegawai</h5>
                             </div>
-                            <a href="/absence-management/create" class="btn bg-gradient-primary btn-sm mb-0"
+                            <a href="/{{ $menuUrl }}/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
                                 Pengajuan Baru</a>
                         </div>
@@ -101,20 +100,26 @@
                                             <td>
                                                 @if ($absence->approved === 'butuh persetujuan')
                                                     <div class="text-center">
-                                                        <i class="fas fa-check-circle text-success cursor-pointer mx-1"
-                                                            data-bs-toggle="modal" data-bs-target="#absenceModal"
-                                                            data-id="{{ $absence->id }}" data-approved="disetujui"></i>
-                                                        <i class="fas fa-times-circle text-danger cursor-pointer mx-1"
-                                                            data-bs-toggle="modal" data-bs-target="#absenceModal"
-                                                            data-id="{{ $absence->id }}" data-approved="ditolak"></i>
+                                                        @if ($menuUrl === 'absence-management')
+                                                            <i class="fas fa-check-circle text-success mx-1 @if ($menuUrl === 'absence-management') cursor-pointer @endif"
+                                                                data-bs-toggle="modal" data-bs-target="#absenceModal"
+                                                                data-id="{{ $absence->id }}" data-approved="disetujui"></i>
+                                                            <i class="fas fa-times-circle text-danger mx-1 @if ($menuUrl === 'absence-management') cursor-pointer @endif"
+                                                                data-bs-toggle="modal" data-bs-target="#absenceModal"
+                                                                data-id="{{ $absence->id }}" data-approved="ditolak"></i>
+                                                        @else
+                                                            <span class="badge badge-sm bg-gradient-secondary">
+                                                                -
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                 @else
                                                     <div class="d-flex justify-content-center text-sm align-items-center">
                                                         <span
-                                                            class="badge cursor-pointer badge-sm @if ($absence->approved === 'disetujui') bg-gradient-success @else bg-gradient-warning @endif"
-                                                            data-bs-toggle="modal" data-bs-target="#absenceModal"
+                                                            class="badge badge-sm @if ($absence->approved === 'disetujui') bg-gradient-success @else bg-gradient-warning @endif  @if ($menuUrl === 'absence-management') cursor-pointer @endif"
+                                                            @if ($menuUrl === 'absence-management') data-bs-toggle="modal" data-bs-target="#absenceModal"
                                                             data-id="{{ $absence->id }}"
-                                                            data-approved="butuh persetujuan">
+                                                            data-approved="butuh persetujuan" @endif>
                                                             {{ $absence->approved }}
                                                         </span>
                                                     </div>
@@ -123,15 +128,17 @@
                                             <td>
                                                 <div
                                                     class="form-check form-switch d-flex justify-content-center absence_pemotongan">
-                                                    <input class="form-check-input absence_pemotongan" type="checkbox"
-                                                        data-bs-toggle="modal" data-bs-target="#absencePotonganModal"
+                                                    <input
+                                                        class="form-check-input absence_pemotongan @if ($menuUrl === 'absence') cursor-default @endif"
+                                                        type="checkbox"
+                                                        @if ($menuUrl === 'absence-management') data-bs-toggle="modal" data-bs-target="#absencePotonganModal"
                                                         data-id="{{ $absence->id }}"
-                                                        data-pemotongan="{{ $absence->pemotongan }}"
+                                                        data-pemotongan="{{ $absence->pemotongan }}" @endif
                                                         {{ $absence->pemotongan ? 'checked' : '' }}>
                                                 </div>
                                             </td>
                                             <td class="text-center">
-                                                <a href="/absence-management/{{ $absence->id }}" class="mx-3"
+                                                <a href="/{{ $menuUrl }}/{{ $absence->id }}" class="mx-3"
                                                     data-bs-toggle="tooltip" data-bs-original-title="Lihat Absensi">
                                                     <i class="fas fa-eye text-secondary"></i>
                                                 </a>
@@ -203,7 +210,7 @@
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: [0, 2, 4, 5, 6, 7],
+                select: [0, 4, 5, 6, 7],
                 sortable: false
             }, ],
             perPageSelect: [10, 25, 50, 100, 200]

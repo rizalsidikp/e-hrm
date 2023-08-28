@@ -15,22 +15,39 @@ class AbsenceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    protected $dataAbsensi = "Data Absensi";
-    protected $absenceManagementLink = "/absence-management";
+    protected $dataAbsensi;
+    protected $absenceManagementLink;
+    protected $userMenu;
+    protected $menuUrl;
 
     public function __construct()
     {
-        $this->middleware('checkRole:admin');
+        $currentRoute = app('router')->getCurrentRoute();
+        $routeName = $currentRoute->getName();
+        $routeParts = explode('.', $routeName);
+        $this->menuUrl = $routeParts[0];
+
+        $this->middleware('checkRole:admin')->only(['approved', 'pemotongan']);
+        $this->userMenu = $this->menuUrl === 'absence';
+        $this->dataAbsensi = $this->userMenu ? "Absensi Saya" : "Data Absensi";
+        $this->absenceManagementLink = '/' . $this->menuUrl;
     }
     public function index()
     {
+        if ($this->redirectToUserPage()) {
+            return redirect('/absence');
+        }
         $breadcrumbs = [
             [
                 "name" => $this->dataAbsensi,
             ]
         ];
-        $absences = Absence::with(['user', 'userApproved'])->orderBy("id", "desc")->get();
-        return view('pages.absence-management.index', compact('absences', 'breadcrumbs'));
+        $absences = Absence::with(['user', 'userApproved']);
+        if ($this->userMenu) {
+            $absences = $absences->where('user_id', Auth::user()->id);
+        }
+        $absences = $absences->orderBy("id", "desc")->get();
+        return view('pages.absence-management.index', compact('absences', 'breadcrumbs'))->with('menuUrl', $this->menuUrl);
     }
 
     /**
@@ -38,6 +55,9 @@ class AbsenceController extends Controller
      */
     public function create()
     {
+        if ($this->redirectToUserPage()) {
+            return redirect('/absence/create');
+        }
         $breadcrumbs = [
             [
                 "name" => $this->dataAbsensi,
@@ -49,7 +69,7 @@ class AbsenceController extends Controller
             ]
         ];
         $users = User::where('id', '!=', '1')->get();
-        return view('pages.absence-management.create', compact('breadcrumbs', 'users'));
+        return view('pages.absence-management.create', compact('breadcrumbs', 'users'))->with('menuUrl', $this->menuUrl);
     }
 
     /**
@@ -58,7 +78,7 @@ class AbsenceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => !$this->userMenu ? 'required|exists:users,id' : '',
             // Pastikan user_id valid dan ada dalam tabel users
             'status' => 'required|in:izin,sakit',
             'tipe' => 'required|in:hari,jam',
@@ -71,8 +91,6 @@ class AbsenceController extends Controller
             'pemotongan' => 'in:on',
             'bukti' => 'required_if:status,sakit',
         ]);
-
-
 
         $jumlahJam = 0;
 
@@ -103,8 +121,9 @@ class AbsenceController extends Controller
 
         }
 
+
         $data = [
-            'user_id' => (int) $request->user_id,
+            'user_id' => $this->userMenu ? Auth::user()->id : (int) $request->user_id,
             'status' => $request->status,
             'tipe' => $request->tipe,
             'tanggal_mulai' => $request->tipe === 'jam' ? $request->tanggal : $request->tanggal_mulai,
@@ -113,11 +132,15 @@ class AbsenceController extends Controller
             'jam_selesai' => $request->tipe === 'hari' ? null : $request->jam_selesai,
             'jumlah_jam' => $jumlahJam,
             'alasan' => $request->alasan,
-            'approved' => Auth::user()->role === 'admin' ? 'disetujui' : 'butuh persetujuan',
-            'approved_by' => Auth::user()->role === 'admin' ? Auth::user()->id : null,
+            'approved' => $this->userMenu ? 'butuh persetujuan' : 'disetujui',
+            'approved_by' => $this->userMenu ? null : Auth::user()->id,
             'pemotongan' => $request->pemotongan ? true : false,
             'bukti' => $isValidFile ? $request->bukti : null,
         ];
+
+        if ($this->userMenu) {
+            $data['pemotongan'] = !($request->status === 'sakit' && $isValidFile);
+        }
 
         $absence = new Absence($data);
         $absence->save();
@@ -190,20 +213,36 @@ class AbsenceController extends Controller
      */
     public function show(string $id)
     {
+        if ($this->redirectToUserPage()) {
+            return redirect('/absence/' . $id);
+        }
         $breadcrumbs = [
             [
                 "name" => $this->dataAbsensi,
                 "link" => $this->absenceManagementLink
             ],
             [
-                "name" => "Detail Data Pegawai",
+                "name" => "Detail Pengajuan Izin & Sakit",
             ]
         ];
-        $absence = Absence::find($id);
+        if ($this->userMenu) {
+            $absence = Absence::where('user_id', Auth::user()->id)->find($id);
+        } else {
+            $absence = Absence::find($id);
+        }
         if (!$absence) {
-            return redirect($this->absenceManagementLink)->with('error', 'Pengajuan tidak ditemukan.');
+            return redirect($this->absenceManagementLink)->with('error', 'Pengajuan tidak ditemukan.')->with('menuUrl', $this->menuUrl);
         }
 
         return view('pages.absence-management.show', compact('absence', 'breadcrumbs'));
+    }
+
+    protected function redirectToUserPage()
+    {
+        $role = Auth::user()->role;
+        if (!$this->userMenu && $role !== 'admin') {
+            return true;
+        }
+        return false;
     }
 }

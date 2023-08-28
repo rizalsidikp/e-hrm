@@ -14,3 +14,6 @@
 .dataTable-sorter::before, .dataTable-sorter::after{
     right: -12px;
 }
+.cursor-default{
+    cursor: default !important;
+}

@@ -102,30 +102,20 @@ class OvertimeController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        $breadcrumbs = [
+            [
+                "name" => $this->dataLembur,
+                "link" => $this->ovetimeManagementLink
+            ],
+            [
+                "name" => "Detail Pengajuan Izin & Sakit",
+            ]
+        ];
+        $overtime = Overtime::find($id);
+        if (!$overtime) {
+            return redirect($this->ovetimeManagementLink)->with('error', 'Pengajuan tidak ditemukan.');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('pages.overtime-management.show', compact('overtime', 'breadcrumbs'));
     }
 }

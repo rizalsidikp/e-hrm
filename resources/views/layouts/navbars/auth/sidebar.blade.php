@@ -8,7 +8,7 @@
                 [
                     'label' => 'Dashboard',
                     'icon' => 'fa-home',
-                    'url' => 'dashbaord',
+                    'url' => 'dashboard',
                 ],
                 [
                     'label' => 'Absensi',

@@ -94,7 +94,7 @@
                                             <td>
                                                 <div class="d-flex justify-content-center text-sm align-items-center">
                                                     <span
-                                                        class="badge cursor-pointer badge-sm 
+                                                        class="badge badge-sm 
                                                         @if ($overtime->approved_user === 'disetujui') bg-gradient-success 
                                                         @elseif($overtime->approved_user === 'ditolak') 
                                                         bg-gradient-warning 
@@ -107,7 +107,7 @@
                                             <td>
                                                 <div class="d-flex justify-content-center text-sm align-items-center">
                                                     <span
-                                                        class="badge cursor-pointer badge-sm 
+                                                        class="badge badge-sm 
                                                         @if ($overtime->approved_pengawas === 'disetujui') bg-gradient-success 
                                                         @elseif($overtime->approved_pengawas === 'ditolak') 
                                                         bg-gradient-warning 
@@ -120,7 +120,7 @@
                                             <td>
                                                 <div class="d-flex justify-content-center text-sm align-items-center">
                                                     <span
-                                                        class="badge cursor-pointer badge-sm 
+                                                        class="badge badge-sm 
                                                         @if ($overtime->approved_manajer === 'disetujui') bg-gradient-success 
                                                         @elseif($overtime->approved_manajer === 'ditolak') 
                                                         bg-gradient-warning 

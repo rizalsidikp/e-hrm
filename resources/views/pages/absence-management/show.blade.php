@@ -129,6 +129,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" id="backButton"
+                            class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Kembali' }}</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,6 +172,13 @@
             var modal = $(this);
             var urlGambar = "{{ asset('') }}" + image;
             $('#imgAbsenceBukti').attr('src', urlGambar)
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#backButton').click(function() {
+                window.history.back();
+            });
         });
     </script>
 @endsection
