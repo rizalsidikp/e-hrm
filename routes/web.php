@@ -25,6 +25,9 @@ Route::group(['middleware' => 'auth'], function () {
 	// user route
 	Route::resource('dashboard', \App\Http\Controllers\DashboardController::class)->only(['index', 'update']);
 	Route::resource('absence', \App\Http\Controllers\AbsenceController::class)->except(['edit', 'update', 'destroy']);
+	Route::resource('overtime', \App\Http\Controllers\OvertimeController::class)->only(['index', 'show']);
+	Route::put('overtime/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime.approved');
+
 
 
 	//admin route
@@ -34,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('absence-management/{id}/approved', [\App\Http\Controllers\AbsenceController::class, 'approved'])->name('absence-management.approved');
 	Route::put('absence-management/{id}/pemotongan', [\App\Http\Controllers\AbsenceController::class, 'pemotongan'])->name('absence-management.pemotongan');
 	Route::resource('overtime-management', \App\Http\Controllers\OvertimeController::class)->only(['index', 'create', 'show']);
+	Route::put('overtime-management/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime-management.approved');
 
 
 	// 

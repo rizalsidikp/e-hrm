@@ -6,13 +6,24 @@ use App\Models\Overtime;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+
 class OvertimeController extends Controller
 {
-    protected $dataLembur = "Data Lembur";
-    protected $ovetimeManagementLink = "/overtime-management";
+    protected $dataLembur;
+    protected $ovetimeManagementLink;
+    protected $userMenu;
+    protected $menuUrl;
     public function __construct()
     {
-        $this->middleware('checkRole:admin');
+        $currentRoute = app('router')->getCurrentRoute();
+        $routeName = $currentRoute->getName();
+        $routeParts = explode('.', $routeName);
+        $this->menuUrl = $routeParts[0];
+
+        $this->middleware('checkRole:admin,pengawas')->only(['create', 'store']);
+        $this->userMenu = $this->menuUrl === 'overtime';
+        $this->dataLembur = $this->userMenu ? "Lembur Saya" : "Data Absensi";
+        $this->ovetimeManagementLink = '/' . $this->menuUrl;
     }
 
     /**
@@ -20,13 +31,20 @@ class OvertimeController extends Controller
      */
     public function index()
     {
+        if ($this->redirectToUserPage()) {
+            return redirect('/overtime');
+        }
         $breadcrumbs = [
             [
                 "name" => $this->dataLembur,
             ]
         ];
-        $overtimes = Overtime::all();
-        return view('pages.overtime-management.index', compact('overtimes', 'breadcrumbs'));
+        if ($this->userMenu) {
+            $overtimes = Overtime::where('user_id', auth()->user()->id)->get();
+        } else {
+            $overtimes = Overtime::all();
+        }
+        return view('pages.overtime-management.index', compact('overtimes', 'breadcrumbs'))->with('menuUrl', $this->menuUrl);
     }
 
     /**
@@ -117,5 +135,39 @@ class OvertimeController extends Controller
         }
 
         return view('pages.overtime-management.show', compact('overtime', 'breadcrumbs'));
+    }
+    protected function redirectToUserPage()
+    {
+        $role = auth()->user()->role;
+        if (!$this->userMenu && $role === 'user') {
+            return true;
+        }
+        return false;
+    }
+
+    public function approved(Request $request, string $id)
+    {
+        $pengajuanTidakDitemukan = 'Pengajuan tidak ditemukan';
+        $request->validate([
+            'approved' => 'required|in:ditolak,disetujui,butuh persetujuan',
+            'by' => 'required|in:user,pengawas,manajer'
+        ]);
+        if ($request->by === 'user') {
+            $overtime = Overtime::where('user_id', auth()->user()->id)->find($id);
+            if (!$overtime) {
+                return redirect($this->ovetimeManagementLink)->with('error', $pengajuanTidakDitemukan);
+            }
+            $overtime->update([
+                'approved_user' => $request->approved,
+            ]);
+        }
+
+        return redirect($this->ovetimeManagementLink)->with(
+            'success',
+            $request->approved === "butuh persetujuan" ?
+            'Persetujuan pengajuan berhasil dibatalkan'
+            :
+            'Pengajuan berhasil ' . $request->approved
+        );
     }
 }
