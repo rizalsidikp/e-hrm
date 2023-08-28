@@ -105,13 +105,24 @@
                                 <div class="form-group">
                                     <label for="overtime.pengawas_id"
                                         class="form-control-label">{{ __('Nama Pengawas') }}</label>
-                                    <select class="form-control" id="overtime.pengawas_id" name="pengawas_id" required>
-                                        @foreach ($users as $key => $user)
-                                            <option value="{{ $user->id }}"
-                                                {{ (int) old('pengawas_id') === $user->id ? 'selected' : '' }}>
-                                                {{ $user->nama }}</option>
-                                        @endforeach
-                                    </select>
+                                    @if (auth()->user()->role === 'pengawas')
+                                        <select class="form-control custom-disabled" id="overtime.pengawas_id"
+                                            name="pengawas_id" disabled>
+                                            @foreach ($users as $key => $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ auth()->user()->id === $user->id ? 'selected' : '' }}>
+                                                    {{ $user->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    @else
+                                        <select class="form-control" id="overtime.pengawas_id" name="pengawas_id" required>
+                                            @foreach ($users as $key => $user)
+                                                <option value="{{ $user->id }}"
+                                                    {{ (int) old('pengawas_id') === $user->id ? 'selected' : '' }}>
+                                                    {{ $user->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
                                     @error('pengawas_id')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -173,6 +184,14 @@
     <script type="text/javascript">
         if (document.getElementById('overtime.user_id')) {
             var element = document.getElementById('overtime.user_id');
+            const example = new Choices(element, {});
+        }
+        if (document.getElementById('overtime.pengawas_id')) {
+            var element = document.getElementById('overtime.pengawas_id');
+            const example = new Choices(element, {});
+        }
+        if (document.getElementById('overtime.manajer_id')) {
+            var element = document.getElementById('overtime.manajer_id');
             const example = new Choices(element, {});
         }
     </script>

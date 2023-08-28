@@ -50,7 +50,7 @@
                 [
                     'label' => 'Persetujuan Lembur',
                     'icon' => 'fa-business-time',
-                    'url' => 'overtime-approval',
+                    'url' => 'overtime-management',
                 ],
             ],
         ],
@@ -61,7 +61,7 @@
                 [
                     'label' => 'Persetujuan Lembur',
                     'icon' => 'fa-business-time',
-                    'url' => 'overtime-approval',
+                    'url' => 'overtime-management',
                 ],
             ],
         ],
@@ -79,7 +79,7 @@
     </div>
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav" style="padding-bottom: 48px">
             @foreach ($sectionMenu as $section)
                 @if ($section['role'] === 'user' || $section['role'] === Auth::user()->role)
                     <li class="nav-item mt-2">

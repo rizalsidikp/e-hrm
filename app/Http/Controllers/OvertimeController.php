@@ -40,9 +40,15 @@ class OvertimeController extends Controller
             ]
         ];
         if ($this->userMenu) {
-            $overtimes = Overtime::where('user_id', auth()->user()->id)->get();
+            $overtimes = Overtime::where('user_id', auth()->user()->id)->orderBy("id", "desc")->get();
         } else {
-            $overtimes = Overtime::all();
+            if (auth()->user()->role === 'manajer') {
+                $overtimes = Overtime::where('manajer_id', auth()->user()->id)->orderBy("id", "desc")->get();
+            } elseif (auth()->user()->role === 'pengawas') {
+                $overtimes = Overtime::where('pengawas_id', auth()->user()->id)->orderBy("id", "desc")->get();
+            } else {
+                $overtimes = Overtime::orderBy("id", "desc")->get();
+            }
         }
         return view('pages.overtime-management.index', compact('overtimes', 'breadcrumbs'))->with('menuUrl', $this->menuUrl);
     }
@@ -104,11 +110,15 @@ class OvertimeController extends Controller
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
             'jumlah_jam' => $jumlahJam,
-            'pengawas_id' => $request->pengawas_id,
+            'pengawas_id' => auth()->user()->role === 'pengawas' ? auth()->user()->id : $request->pengawas_id,
             'manajer_id' => $request->manajer_id,
             'jumlah_operator' => $request->jumlah_operator,
             'alasan' => $request->alasan,
         ];
+
+        if (auth()->user()->role === 'pengawas') {
+            $data['approved_pengawas'] = 'disetujui';
+        }
 
         $overtime = new Overtime($data);
         $overtime->save();
@@ -159,6 +169,22 @@ class OvertimeController extends Controller
             }
             $overtime->update([
                 'approved_user' => $request->approved,
+            ]);
+        } elseif ($request->by === 'pengawas') {
+            $overtime = Overtime::where('pengawas_id', auth()->user()->id)->find($id);
+            if (!$overtime) {
+                return redirect($this->ovetimeManagementLink)->with('error', $pengajuanTidakDitemukan);
+            }
+            $overtime->update([
+                'approved_pengawas' => $request->approved,
+            ]);
+        } elseif ($request->by === 'manajer') {
+            $overtime = Overtime::where('manajer_id', auth()->user()->id)->find($id);
+            if (!$overtime) {
+                return redirect($this->ovetimeManagementLink)->with('error', $pengajuanTidakDitemukan);
+            }
+            $overtime->update([
+                'approved_manajer' => $request->approved,
             ]);
         }
 

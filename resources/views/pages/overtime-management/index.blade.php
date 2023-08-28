@@ -29,7 +29,7 @@
                             <div>
                                 <h5 class="mb-0">Daftar Lembur Pegawai</h5>
                             </div>
-                            @if ($menuUrl !== 'overtime')
+                            @if ($menuUrl !== 'overtime' && auth()->user()->role !== 'manajer')
                                 <a href="/overtime-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                     type="button">+&nbsp;
                                     Pengajuan Baru</a>
@@ -122,28 +122,62 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center text-sm align-items-center">
-                                                    <span
-                                                        class="badge badge-sm 
-                                                        @if ($overtime->approved_pengawas === 'disetujui') bg-gradient-success 
-                                                        @elseif($overtime->approved_pengawas === 'ditolak') 
-                                                        bg-gradient-warning 
-                                                        @else
-                                                        bg-gradient-secondary @endif">
-                                                        {{ $overtime->approved_pengawas === 'butuh persetujuan' ? '-' : $overtime->approved_pengawas }}
-                                                    </span>
+                                                    @if (
+                                                        $menuUrl === 'overtime-management' &&
+                                                            auth()->user()->role === 'pengawas' &&
+                                                            $overtime->approved_pengawas === 'butuh persetujuan')
+                                                        <i class="fas fa-check-circle text-success mx-1 cursor-pointer"
+                                                            data-bs-toggle="modal" data-bs-target="#overtimeModal"
+                                                            data-id="{{ $overtime->id }}" data-approved="disetujui"
+                                                            data-by="pengawas"></i>
+                                                        <i class="fas fa-times-circle text-danger mx-1 cursor-pointer"
+                                                            data-bs-toggle="modal" data-bs-target="#overtimeModal"
+                                                            data-id="{{ $overtime->id }}" data-approved="ditolak"
+                                                            data-by="pengawas"></i>
+                                                    @else
+                                                        <span
+                                                            class="badge badge-sm 
+                                                            @if ($overtime->approved_pengawas === 'disetujui') bg-gradient-success
+                                                            @elseif($overtime->approved_pengawas === 'ditolak') 
+                                                            bg-gradient-warning 
+                                                            @else
+                                                            bg-gradient-secondary @endif @if ($menuUrl === 'overtime-management' && auth()->user()->role === 'pengawas') cursor-pointer @endif"
+                                                            @if ($menuUrl === 'overtime-management' && auth()->user()->role === 'pengawas') data-bs-toggle="modal" data-bs-target="#overtimeModal"
+                                                            data-id="{{ $overtime->id }}" data-approved="butuh persetujuan"
+                                                            data-by="pengawas" @endif>
+                                                            {{ $overtime->approved_pengawas === 'butuh persetujuan' ? '-' : $overtime->approved_pengawas }}
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center text-sm align-items-center">
-                                                    <span
-                                                        class="badge badge-sm 
-                                                        @if ($overtime->approved_manajer === 'disetujui') bg-gradient-success 
-                                                        @elseif($overtime->approved_manajer === 'ditolak') 
-                                                        bg-gradient-warning 
-                                                        @else
-                                                        bg-gradient-secondary @endif">
-                                                        {{ $overtime->approved_manajer === 'butuh persetujuan' ? '-' : $overtime->approved_manajer }}
-                                                    </span>
+                                                    @if (
+                                                        $menuUrl === 'overtime-management' &&
+                                                            auth()->user()->role === 'manajer' &&
+                                                            $overtime->approved_manajer === 'butuh persetujuan')
+                                                        <i class="fas fa-check-circle text-success mx-1 cursor-pointer"
+                                                            data-bs-toggle="modal" data-bs-target="#overtimeModal"
+                                                            data-id="{{ $overtime->id }}" data-approved="disetujui"
+                                                            data-by="manajer"></i>
+                                                        <i class="fas fa-times-circle text-danger mx-1 cursor-pointer"
+                                                            data-bs-toggle="modal" data-bs-target="#overtimeModal"
+                                                            data-id="{{ $overtime->id }}" data-approved="ditolak"
+                                                            data-by="manajer"></i>
+                                                    @else
+                                                        <span
+                                                            class="badge badge-sm 
+                                                            @if ($overtime->approved_manajer === 'disetujui') bg-gradient-success
+                                                            @elseif($overtime->approved_manajer === 'ditolak') 
+                                                            bg-gradient-warning 
+                                                            @else
+                                                            bg-gradient-secondary @endif @if ($menuUrl === 'overtime-management' && auth()->user()->role === 'manajer') cursor-pointer @endif"
+                                                            @if ($menuUrl === 'overtime-management' && auth()->user()->role === 'manajer') data-bs-toggle="modal" data-bs-target="#overtimeModal"
+                                                            data-id="{{ $overtime->id }}" data-approved="butuh persetujuan"
+                                                            data-by="manajer" @endif>
+                                                            {{ $overtime->approved_manajer === 'butuh persetujuan' ? '-' : $overtime->approved_manajer }}
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td class="text-center">

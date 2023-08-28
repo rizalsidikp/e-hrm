@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('absence-management/bukti', [\App\Http\Controllers\AbsenceController::class, 'uploadBukti'])->name('absence-management.bukti');
 	Route::put('absence-management/{id}/approved', [\App\Http\Controllers\AbsenceController::class, 'approved'])->name('absence-management.approved');
 	Route::put('absence-management/{id}/pemotongan', [\App\Http\Controllers\AbsenceController::class, 'pemotongan'])->name('absence-management.pemotongan');
-	Route::resource('overtime-management', \App\Http\Controllers\OvertimeController::class)->only(['index', 'create', 'show']);
+	Route::resource('overtime-management', \App\Http\Controllers\OvertimeController::class)->only(['index', 'create', 'show', 'store']);
 	Route::put('overtime-management/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime-management.approved');
 
 
