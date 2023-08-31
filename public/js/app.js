@@ -19320,10 +19320,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./public/assets/scss/soft-ui-dashboard/plugins/pro/_dropzone.scss":
-/*!*************************************************************************!*\
-  !*** ./public/assets/scss/soft-ui-dashboard/plugins/pro/_dropzone.scss ***!
-  \*************************************************************************/
+/***/ "./public/assets/scss/soft-ui-dashboard/plugins/pro/_quill.scss":
+/*!**********************************************************************!*\
+  !*** ./public/assets/scss/soft-ui-dashboard/plugins/pro/_quill.scss ***!
+  \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -19663,7 +19663,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0,
-/******/ 			"assets/css/_dropzone": 0,
+/******/ 			"assets/css/_quill": 0,
 /******/ 			"assets/css/soft-ui-dashboard": 0
 /******/ 		};
 /******/ 		
@@ -19714,10 +19714,10 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app","assets/css/_dropzone","assets/css/soft-ui-dashboard"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","assets/css/_dropzone","assets/css/soft-ui-dashboard"], () => (__webpack_require__("./public/assets/scss/soft-ui-dashboard.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","assets/css/_dropzone","assets/css/soft-ui-dashboard"], () => (__webpack_require__("./public/assets/scss/soft-ui-dashboard/plugins/pro/_dropzone.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","assets/css/_dropzone","assets/css/soft-ui-dashboard"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","assets/css/_quill","assets/css/soft-ui-dashboard"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","assets/css/_quill","assets/css/soft-ui-dashboard"], () => (__webpack_require__("./public/assets/scss/soft-ui-dashboard.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","assets/css/_quill","assets/css/soft-ui-dashboard"], () => (__webpack_require__("./public/assets/scss/soft-ui-dashboard/plugins/pro/_quill.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","assets/css/_quill","assets/css/soft-ui-dashboard"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

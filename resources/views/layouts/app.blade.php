@@ -44,6 +44,7 @@
     <link href="{{ asset('assets/css/_datatable-extend.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/_choices.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/_dropzone.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/_quill.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" />
 
 </head>
@@ -77,6 +78,7 @@
     <script src="{{ asset('assets/js/plugins/choices.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/flatpickr.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/dropzone.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/quill.min.js') }}"></script>
     @stack('rtl')
     @stack('dashboard')
     <script>

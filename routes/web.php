@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('absence-management/{id}/pemotongan', [\App\Http\Controllers\AbsenceController::class, 'pemotongan'])->name('absence-management.pemotongan');
 	Route::resource('overtime-management', \App\Http\Controllers\OvertimeController::class)->only(['index', 'create', 'show', 'store']);
 	Route::put('overtime-management/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime-management.approved');
+	Route::resource('announcement-management', \App\Http\Controllers\AnnouncementController::class)->except(['show']);
 
 
 	// 

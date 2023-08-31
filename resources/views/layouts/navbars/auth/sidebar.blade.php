@@ -41,6 +41,11 @@
                     'icon' => 'fa-business-time',
                     'url' => 'overtime-management',
                 ],
+                [
+                    'label' => 'Pengumuman',
+                    'icon' => 'fa-newspaper',
+                    'url' => 'announcement-management',
+                ],
             ],
         ],
         [
