@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AnnouncementController extends Controller
 {
     protected $dataPengumuman = "Data Pengumuman";
-    protected $anouncementManagementLink = "/announcement-management";
+    protected $announcementManagementLink = "/announcement-management";
     protected $notFoundMessage = "Data pengumuman tidak ditemukan.";
     public function __construct()
     {
@@ -24,7 +24,7 @@ class AnnouncementController extends Controller
                 "name" => $this->dataPengumuman,
             ]
         ];
-        $announcements = Announcement::all();
+        $announcements = Announcement::orderBy('id', 'desc')->get();
         return view('pages.announcement-management.index', compact('announcements', 'breadcrumbs'));
     }
 
@@ -37,7 +37,7 @@ class AnnouncementController extends Controller
             [
                 "name" => $this->dataPengumuman,
 
-                "link" => $this->anouncementManagementLink
+                "link" => $this->announcementManagementLink
             ],
             [
                 "name" => "Pengumuman Baru",
@@ -51,15 +51,21 @@ class AnnouncementController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'judul' => 'required|max:255',
+            'deskripsi' => 'required',
+            // Validasi deskripsi Quill
+            'link' => 'nullable|url' // Validasi link
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        $announcement = new Announcement();
+        $announcement->user_id = auth()->user()->id;
+        $announcement->judul = $request->judul;
+        $announcement->deskripsi = $request->deskripsi;
+        $announcement->link = $request->link;
+        $announcement->save();
+
+        return redirect($this->announcementManagementLink)->with('success', 'Data pegawai berhasil ditambah');
     }
 
     /**
@@ -67,7 +73,21 @@ class AnnouncementController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $breadcrumbs = [
+            [
+                "name" => $this->dataPengumuman,
+                "link" => $this->announcementManagementLink
+            ],
+            [
+                "name" => "Ubah Informasi Pengumuman",
+            ]
+        ];
+        $announcement = Announcement::find($id);
+        if (!$announcement) {
+            return redirect($this->announcementManagementLink)->with('error', $this->notFoundMessage);
+        }
+
+        return view('pages.announcement-management.edit', compact('announcement', 'breadcrumbs'));
     }
 
     /**
@@ -75,7 +95,22 @@ class AnnouncementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $announcement = Announcement::find($id);
+        if (!$announcement) {
+            return redirect($this->announcementManagementLink)->with('error', $this->notFoundMessage);
+        }
+        $request->validate([
+            'judul' => 'required|max:255',
+            'deskripsi' => 'required',
+            // Validasi deskripsi Quill
+            'link' => 'nullable|url' // Validasi link
+        ]);
+        $announcement->judul = $request->judul;
+        $announcement->deskripsi = $request->deskripsi;
+        $announcement->link = $request->link;
+        $announcement->save();
+
+        return redirect($this->announcementManagementLink)->with('success', 'Pengumuman berhasil diperbarui.');
     }
 
     /**

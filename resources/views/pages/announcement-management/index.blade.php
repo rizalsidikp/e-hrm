@@ -68,21 +68,20 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $announcement->judul }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $announcement->user->nama }}</p>
+                                                <p class="text-xs text-center font-weight-bold mb-0">
+                                                    {{ $announcement->user->nama }}</p>
                                             </td>
                                             <td class="text-center">
-                                                <span
-                                                    class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($user->mulai_bekerja)->format('d F Y') }}
-                                                </span>
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="/announcement-management/{{ $announcement->id }}/edit"
-                                                    class="mx-3" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Edit pengumuman">
-                                                    <i class="fas fa-user-edit text-secondary"></i>
-                                                </a>
-                                                <i class="fas fa-trash text-secondary cursor-pointer" data-bs-toggle="modal"
-                                                    data-bs-target="#userDeleteModal" data-id="{{ $announcement->id }}"></i>
+                                                @if ($announcement->user->id === auth()->user()->id)
+                                                    <a href="/announcement-management/{{ $announcement->id }}/edit"
+                                                        class="mx-1" data-bs-toggle="tooltip"
+                                                        data-bs-original-title="Edit pengumuman">
+                                                        <i class="fas fa-edit text-secondary"></i>
+                                                    </a>
+                                                    <i class="fas fa-trash text-secondary cursor-pointer mx-1"
+                                                        data-bs-toggle="modal" data-bs-target="#userDeleteModal"
+                                                        data-id="{{ $announcement->id }}"></i>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -125,7 +124,7 @@
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: [0, 3, 5],
+                select: [0, 3],
                 sortable: false
             }, ],
             perPageSelect: [10, 25, 50, 100, 200]

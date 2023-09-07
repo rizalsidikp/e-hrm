@@ -8,7 +8,7 @@
                     <h6 class="mb-0">{{ __('Informasi Pengumuman') }}</h6>
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form action="/user-management" method="POST" role="form text-left">
+                    <form id="announcement-create" action="/announcement-management" method="POST" role="form text-left">
                         @csrf
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
@@ -47,8 +47,9 @@
                                 <div class="form-group">
                                     <label for="announcement.deskripsi"
                                         class="form-control-label">{{ __('Detail Pengumuman') }}</label>
-                                    <div id="deskripsi">
-
+                                    <input type="hidden" id="deskripsi" name="deskripsi">
+                                    <div id="deskripsi_konten" style="height: 400px" name="deskripsi">
+                                        <p>{!! old('deskripsi') !!}</p>
                                     </div>
                                     @error('deskripsi')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -62,7 +63,7 @@
                                     <label for="announcement.link"
                                         class="form-control-label">{{ __('Link Google Drive') }}</label>
                                     <input class="form-control" type="text" placeholder="https://drive.google.com/drive"
-                                        id="announcement.link" name="link" value="{{ old('link') }}" required>
+                                        id="announcement.link" name="link" value="{{ old('link') }}">
                                     @error('link')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -88,8 +89,19 @@
         }
     </script>
     <script>
-        var quill = new Quill('#deskripsi', {
+        var quill = new Quill('#deskripsi_konten', {
             theme: 'snow' // Specify theme in configuration
         });
+        @if (old('deskripsi'))
+            var editorContent = @json(old('deskripsi'));
+            quill.setContents(JSON.parse(editorContent));
+        @endif
+
+        var form = document.getElementById('announcement-create');
+        form.onsubmit = function() {
+            var delta = quill.getContents();
+            var htmlContent = JSON.stringify(delta);
+            document.getElementById('deskripsi').value = htmlContent;
+        };
     </script>
 @endsection
