@@ -4,6 +4,12 @@ Github: https://github.com/fiduswriter/Simple-DataTables
 */
 
 // Creative Tim Changes
+// Custom Variables
+@import "../../custom/_variables";
+@import "../../bootstrap/functions";
+@import "../../bootstrap/bootstrap";
+@import "../../variables";
+@import "../../theme.scss";
 
 .dataTable-wrapper{
 	.dataTable-top{
