@@ -102,7 +102,7 @@ class UserSeeder extends Seeder
                 'gaji' => 4250000,
                 'email' => 'user5@gmail.com',
                 'password' => Hash::make('secret'),
-                'role' => 'user',
+                'role' => 'manajer',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
