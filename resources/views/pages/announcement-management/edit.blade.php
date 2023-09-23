@@ -12,7 +12,6 @@
                         role="form text-left">
                         @csrf
                         @method('PUT')
-                        @csrf
                         @if ($errors->any())
                             <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
                                 <span class="alert-text text-white">

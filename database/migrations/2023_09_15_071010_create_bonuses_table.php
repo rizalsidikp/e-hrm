@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->double("bonus");
             $table->date("periode");
-            $table->string("description")->nullable();
+            $table->string("deskripsi")->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');

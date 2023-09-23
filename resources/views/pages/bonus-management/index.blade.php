@@ -27,12 +27,11 @@
                     <div class="card-header pb-0">
                         <div class="d-flex flex-row justify-content-between">
                             <div>
-                                <h5 class="mb-0">Daftar Pengumuman</h5>
+                                <h5 class="mb-0">Daftar Bonus Pegawai</h5>
                             </div>
-                            <a href="/announcement-management/create" class="btn bg-gradient-primary btn-sm mb-0"
+                            <a href="/bonus-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
-                                Pengumuman
-                                Baru</a>
+                                Bonus Pegawai Baru</a>
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -46,11 +45,19 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Judul
+                                            Pegawai
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Oleh
+                                            Bonus
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Periode
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Deskripsi
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -59,29 +66,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($announcements as $key => $announcement)
+                                    @foreach ($bonuses as $key => $bonus)
                                         <tr>
                                             <td class="ps-4">
                                                 <p class="text-xs font-weight-bold mb-0">{{ $key + 1 }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $announcement->judul }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $bonus->user->nama }}</p>
                                             </td>
                                             <td>
                                                 <p class="text-xs text-center font-weight-bold mb-0">
-                                                    {{ $announcement->user->nama }}</p>
+                                                    {{ $bonus->bonus }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs text-center font-weight-bold mb-0">
+                                                    {{ date('F Y', strtotime($bonus->periode)) }}
+                                            </td>
+                                            <td>
+                                                <p class="text-xs text-center font-weight-bold mb-0">
+                                                    {{ $bonus->deskripsi }}</p>
                                             </td>
                                             <td class="text-center">
-                                                @if ($announcement->user->id === auth()->user()->id)
-                                                    <a href="/announcement-management/{{ $announcement->id }}/edit"
-                                                        class="mx-1" data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Edit pengumuman">
-                                                        <i class="fas fa-edit text-secondary"></i>
-                                                    </a>
-                                                    <i class="fas fa-trash text-secondary cursor-pointer mx-1"
-                                                        data-bs-toggle="modal" data-bs-target="#userDeleteModal"
-                                                        data-id="{{ $announcement->id }}"></i>
-                                                @endif
+                                                <a href="/bonus-management/{{ $bonus->id }}/edit"
+                                                    class="mx-1" data-bs-toggle="tooltip"
+                                                    data-bs-original-title="Edit Bonus Pegawai">
+                                                    <i class="fas fa-edit text-secondary"></i>
+                                                </a>
+                                                <i class="fas fa-trash text-secondary cursor-pointer mx-1"
+                                                    data-bs-toggle="modal" data-bs-target="#userDeleteModal"
+                                                    data-id="{{ $bonus->id }}"></i>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -98,7 +111,7 @@
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title font-weight-normal" id="userDeleteModalLabel">Hapus Data Pengumuman</h5>
+                    <h5 class="modal-title font-weight-normal" id="userDeleteModalLabel">Hapus Bonus Pegawai</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -124,7 +137,7 @@
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: [0, 3],
+                select: [0, 4, 5],
                 sortable: false
             }, ],
             perPageSelect: [10, 25, 50, 100, 200]
@@ -135,7 +148,7 @@
             var button = $(event.relatedTarget); // Tombol yang membuka modal
             var userId = button.data('id'); // Ambil data user ID dari tombol
             var modal = $(this);
-            modal.find('#user-delete-form').attr('action', 'announcement-management/' + userId);
+            modal.find('#user-delete-form').attr('action', 'bonus-management/' + userId);
         });
     </script>
 @endsection

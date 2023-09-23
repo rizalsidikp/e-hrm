@@ -97,7 +97,7 @@
                                 <div class="form-group">
                                     <label for="user.tanggal_lahir"
                                         class="form-control-label">{{ __('Tanggal Lahir') }}</label>
-                                    <input class="form-control" type="date" id="user.tanggal_lahir" name="tanggal_lahir"
+                                    <input class="form-control datepicker" type="date" id="user.tanggal_lahir" name="tanggal_lahir"
                                         placeholder="" value="{{ old('tanggal_lahir', $user->tanggal_lahir) }}" required>
                                     @error('tanggal_lahir')
                                         <p class="text-danger
@@ -119,7 +119,7 @@
                                 <div class="form-group">
                                     <label for="user.mulai_bekerja"
                                         class="form-control-label">{{ __('Mulai Bekerja') }}</label>
-                                    <input class="form-control" type="date" id="user.mulai_bekerja"
+                                    <input class="form-control datepicker" type="date" id="user.mulai_bekerja"
                                         name="mulai_bekerja" placeholder=""
                                         value="{{ old('mulai_bekerja', $user->mulai_bekerja) }}" required>
                                     @error('mulai_bekerja')
@@ -231,3 +231,13 @@
         </div>
     </div>
 @endsection
+@section('page-content')
+    <script>
+        if (document.querySelector('.datepicker')) {
+            flatpickr('.datepicker', {
+
+            });
+        }
+    </script>
+@endsection
+

@@ -42,6 +42,11 @@
                     'url' => 'overtime-management',
                 ],
                 [
+                    'label' => 'Bonus Pegawai',
+                    'icon' => 'fa-money-bill',
+                    'url' => 'bonus-management',
+                ],
+                [
                     'label' => 'Pengumuman',
                     'icon' => 'fa-newspaper',
                     'url' => 'announcement-management',

@@ -41,7 +41,7 @@
                                                 {{ $user->nama }}</option>
                                         @endforeach
                                     </select>
-                                    @error('nama')
+                                    @error('user_id')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>

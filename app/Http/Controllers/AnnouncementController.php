@@ -118,6 +118,12 @@ class AnnouncementController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $announcement = Announcement::find($id);
+        if ($announcement) {
+            $announcement->delete();
+            return redirect()->back()->with('success', 'Pengumuman berhasil dihapus.');
+        } else {
+            return redirect()->back()->with('error', $this->notFoundMessage);
+        }
     }
 }
