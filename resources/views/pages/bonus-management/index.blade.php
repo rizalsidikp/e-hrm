@@ -29,9 +29,11 @@
                             <div>
                                 <h5 class="mb-0">Daftar Bonus Pegawai</h5>
                             </div>
+                            @if ($menuUrl === 'bonus-management')
                             <a href="/bonus-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
                                 Bonus Pegawai Baru</a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -59,10 +61,12 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Deskripsi
                                         </th>
+                                        @if ($menuUrl === 'bonus-management')
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Action
                                         </th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,6 +90,7 @@
                                                 <p class="text-xs text-center font-weight-bold mb-0">
                                                     {{ $bonus->deskripsi }}</p>
                                             </td>
+                                            @if ($menuUrl === 'bonus-management')
                                             <td class="text-center">
                                                 <a href="/bonus-management/{{ $bonus->id }}/edit"
                                                     class="mx-1" data-bs-toggle="tooltip"
@@ -96,6 +101,7 @@
                                                     data-bs-toggle="modal" data-bs-target="#userDeleteModal"
                                                     data-id="{{ $bonus->id }}"></i>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -133,11 +139,13 @@
 @endsection
 @section('page-content')
     <script type="text/javascript">
+        const menuUrl = "{{ $menuUrl }}"
+        console.log(menuUrl)
         const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: [0, 4, 5],
+                select: menuUrl === 'bonus' ?  [0, 1, 4] : [0, 4, 5],
                 sortable: false
             }, ],
             perPageSelect: [10, 25, 50, 100, 200]

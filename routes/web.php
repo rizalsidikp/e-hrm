@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('absence', \App\Http\Controllers\AbsenceController::class)->except(['edit', 'update', 'destroy']);
 	Route::resource('overtime', \App\Http\Controllers\OvertimeController::class)->only(['index', 'show']);
 	Route::put('overtime/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime.approved');
+	Route::resource('bonus', \App\Http\Controllers\BonusController::class)->only(['index']);
 
 
 

@@ -5,28 +5,47 @@ namespace App\Http\Controllers;
 use App\Models\Bonus;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class BonusController extends Controller
 {
-    protected $dataBonus = "Data Bonus";
-    protected $bonusManagementLink = "/bonus-management";
+    protected $dataBonus;
+    protected $bonusManagementLink;
     protected $notFoundMessage = "Data bonus tidak ditemukan.";
+    protected $menuUrl;
+    protected $userMenu;
     public function __construct()
     {
-        $this->middleware('checkRole:admin');
+        $currentRoute = app('router')->getCurrentRoute();
+        $routeName = $currentRoute->getName();
+        $routeParts = explode('.', $routeName);
+        $this->menuUrl = $routeParts[0];
+        $this->middleware('checkRole:admin')->except(['index']);
+        $this->userMenu = $this->menuUrl === 'bonus';
+        $this->dataBonus = $this->userMenu ? "Bonus Saya" : "Data Bonus";
+        $this->absenceManagementLink = '/' . $this->menuUrl;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        if ($this->redirectToUserPage()) {
+            return redirect('/bonus');
+        }
         $breadcrumbs = [
             [
                 "name" => $this->dataBonus,
             ]
         ];
-        $bonuses = Bonus::orderBy('id', 'desc')->get();
-        return view('pages.bonus-management.index', compact('bonuses', 'breadcrumbs'));
+        $bonuses = null;
+        if ($this->userMenu) {
+            $bonuses = Bonus::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        }else{
+            $bonuses = Bonus::orderBy('id', 'desc')->get();
+        }
+        return view('pages.bonus-management.index', compact('bonuses', 'breadcrumbs'))->with('menuUrl', $this->menuUrl);
     }
 
     /**
@@ -133,5 +152,14 @@ class BonusController extends Controller
         } else {
             return redirect()->back()->with('error', $this->notFoundMessage);
         }
+    }
+
+    protected function redirectToUserPage()
+    {
+        $role = Auth::user()->role;
+        if (!$this->userMenu && $role !== 'admin') {
+            return true;
+        }
+        return false;
     }
 }

@@ -20,6 +20,11 @@
                     'icon' => 'fa-user-clock',
                     'url' => 'overtime',
                 ],
+                [
+                    'label' => 'Bonus',
+                    'icon' => 'fa-gifts',
+                    'url' => 'bonus',
+                ],
             ],
         ],
         [
