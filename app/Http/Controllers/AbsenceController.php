@@ -88,7 +88,7 @@ class AbsenceController extends Controller
             'jam_selesai' => 'required_if:tipe,jam|nullable|date_format:H:i|after:jam_mulai',
             'alasan' => 'required|string',
             'pemotongan' => 'in:on',
-            'bukti' => 'required_if:status,sakit',
+            'bukti' => 'nullable',
         ]);
 
         $jumlahJam = 0;
