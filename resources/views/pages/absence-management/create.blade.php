@@ -277,7 +277,9 @@
              var tipe = this.value;
              handleTipeChange(tipe);
          });
-
+         this.on("removedfile", function(file){
+            fileInput.value = null
+         });
          function handleTipeChange(tipe) {
              if (tipe === 'hari') {
                  document.getElementById('form-tanggal').style.display = 'flex';

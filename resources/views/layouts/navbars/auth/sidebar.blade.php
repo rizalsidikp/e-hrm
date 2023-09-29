@@ -25,6 +25,11 @@
                     'icon' => 'fa-gifts',
                     'url' => 'bonus',
                 ],
+                [
+                    'label' => 'Pelatihan',
+                    'icon' => 'fa-laptop',
+                    'url' => 'training',
+                ],
             ],
         ],
         [
@@ -55,6 +60,11 @@
                     'label' => 'Pengumuman',
                     'icon' => 'fa-newspaper',
                     'url' => 'announcement-management',
+                ],
+                [
+                    'label' => 'Pelatihan Pegawai',
+                    'icon' => 'fa-laptop',
+                    'url' => 'training-management',
                 ],
             ],
         ],

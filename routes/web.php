@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('overtime', \App\Http\Controllers\OvertimeController::class)->only(['index', 'show']);
 	Route::put('overtime/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime.approved');
 	Route::resource('bonus', \App\Http\Controllers\BonusController::class)->only(['index']);
-
+	Route::resource('training', \App\Http\Controllers\TrainingController::class)->only(['index']);
 
 
 	//admin route
@@ -41,6 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('bonus-management', \App\Http\Controllers\BonusController::class);
 	Route::put('overtime-management/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime-management.approved');
 	Route::resource('announcement-management', \App\Http\Controllers\AnnouncementController::class)->except(['show']);
+	Route::resource('training-management', \App\Http\Controllers\TrainingController::class)->except(['show']);
+	Route::post('training-management/file', [\App\Http\Controllers\TrainingController::class, 'uploadFile'])->name('training-management.file');
 
 
 	// 
