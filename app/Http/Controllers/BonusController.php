@@ -24,7 +24,7 @@ class BonusController extends Controller
         $this->middleware('checkRole:admin')->except(['index']);
         $this->userMenu = $this->menuUrl === 'bonus';
         $this->dataBonus = $this->userMenu ? "Bonus Saya" : "Data Bonus";
-        $this->absenceManagementLink = '/' . $this->menuUrl;
+        $this->bonusManagementLink = '/' . $this->menuUrl;
     }
     /**
      * Display a listing of the resource.

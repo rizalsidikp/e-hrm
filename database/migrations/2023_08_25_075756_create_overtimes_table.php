@@ -30,6 +30,7 @@ return new class extends Migration {
             $table->string("jumlah_operator");
             $table->string("alasan");
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pengawas_id')->references('id')->on('users');
             $table->foreign('manajer_id')->references('id')->on('users');

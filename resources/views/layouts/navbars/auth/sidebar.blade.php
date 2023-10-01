@@ -66,6 +66,11 @@
                     'icon' => 'fa-laptop',
                     'url' => 'training-management',
                 ],
+                [
+                    'label' => 'Penggajian Pegawai',
+                    'icon' => 'fa-money-check',
+                    'url' => 'payslip-management',
+                ],
             ],
         ],
         [
