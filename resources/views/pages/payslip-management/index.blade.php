@@ -1,5 +1,61 @@
 @extends('layouts.user_type.auth')
-
+@php
+    $months = [
+        [
+            'option' => 'Januari',
+            'value' => 1
+        ],
+        [
+            'option' => 'Februari',
+            'value' => 2
+        ],
+        [
+            'option' => 'Maret',
+            'value' => 3
+        ],
+        [
+            'option' => 'April',
+            'value' => 4
+        ],
+        [
+            'option' => 'Mei',
+            'value' => 5
+        ],
+        [
+            'option' => 'Juni',
+            'value' => 6
+        ],
+        [
+            'option' => 'Juli',
+            'value' => 7
+        ],
+        [
+            'option' => 'Agustus',
+            'value' => 8
+        ],
+        [
+            'option' => 'September',
+            'value' => 9
+        ],
+        [
+            'option' => 'Oktober',
+            'value' => 10
+        ],
+        [
+            'option' => 'November',
+            'value' => 11
+        ],
+        [
+            'option' => 'Desember',
+            'value' => 12
+        ]
+    ];
+    $currentYear = (int) date('Y');
+    $years = [$currentYear];
+    for($i = 1; $i < 10; $i++){
+        array_push($years, $currentYear - $i);
+    }
+@endphp
 @section('content')
     <div>
         <div class="row">
@@ -32,6 +88,50 @@
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
+                        <div class="row p-4 justify-content-between">
+                            <div class="col-md-8">
+                                <form method="GET" action="/payslip-management">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select class="form-control cursor-pointer" id="bonus.bulan" name="bulan" required>
+                                                    @foreach ($months as $key => $month)
+                                                        <option value="{{ $month['value'] }}"
+                                                            {{ (int) $selectedMonth === $month['value'] ? 'selected' : '' }}>
+                                                            {{ $month['option'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select class="form-control cursor-pointer" id="bonus.tahun" name="tahun" required>
+                                                    @foreach ($years as $key => $year)
+                                                        <option value="{{ $year }}"
+                                                            {{ (int) $selectedYear === $year ? 'selected' : '' }}>
+                                                            {{ $year }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn bg-gradient-primary mb-0 w-100">
+                                                    Filter
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <a href="/payslip-management/export?bulan={{$selectedMonth}}&tahun={{$selectedYear}}" class="btn bg-gradient-info mb-0 w-100">
+                                        Export to excel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0" id="datatable-basic">
                                 <caption></caption>

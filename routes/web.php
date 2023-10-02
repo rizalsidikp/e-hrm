@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('training-management', \App\Http\Controllers\TrainingController::class)->except(['show']);
 	Route::post('training-management/file', [\App\Http\Controllers\TrainingController::class, 'uploadFile'])->name('training-management.file');
 	Route::resource('payslip-management', \App\Http\Controllers\PaySlipController::class)->only(['index']);
+	Route::get('payslip-management/export', [\App\Http\Controllers\PaySlipController::class, 'export']);
 
 
 	// 

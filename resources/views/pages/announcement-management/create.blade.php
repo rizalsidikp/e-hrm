@@ -90,7 +90,15 @@
     </script>
     <script>
         var quill = new Quill('#deskripsi_konten', {
-            theme: 'snow' // Specify theme in configuration
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'link'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }],
+                    ['image']
+                ]
+            },
+            theme: 'snow'  // or 'bubble'
         });
         @if (old('deskripsi'))
             var editorContent = @json(old('deskripsi'));
