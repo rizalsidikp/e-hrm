@@ -22,7 +22,7 @@ class TrainingController extends Controller
         $routeName = $currentRoute->getName();
         $routeParts = explode('.', $routeName);
         $this->menuUrl = $routeParts[0];
-        $this->middleware('checkRole:admin')->except(['index']);
+        $this->middleware('checkRole:admin,superadmin')->except(['index']);
         $this->userMenu = $this->menuUrl === 'training';
         $this->dataTraining = $this->userMenu ? "Pelatihan Saya" : "Data Pelatihan";
         $this->trainingManagementLink = '/' . $this->menuUrl;
@@ -196,7 +196,7 @@ class TrainingController extends Controller
     protected function redirectToUserPage()
     {
         $role = Auth::user()->role;
-        if (!$this->userMenu && $role !== 'admin') {
+        if (!$this->userMenu && ($role !== 'admin' && $role !== 'superadmin')) {
             return true;
         }
         return false;

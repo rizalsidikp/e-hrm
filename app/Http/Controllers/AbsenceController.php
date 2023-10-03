@@ -26,7 +26,7 @@ class AbsenceController extends Controller
         $routeParts = explode('.', $routeName);
         $this->menuUrl = $routeParts[0];
 
-        $this->middleware('checkRole:admin')->only(['approved', 'pemotongan']);
+        $this->middleware('checkRole:admin,superadmin')->only(['approved', 'pemotongan']);
         $this->userMenu = $this->menuUrl === 'absence';
         $this->dataAbsensi = $this->userMenu ? "Absensi Saya" : "Data Absensi";
         $this->absenceManagementLink = '/' . $this->menuUrl;
@@ -239,7 +239,7 @@ class AbsenceController extends Controller
     protected function redirectToUserPage()
     {
         $role = Auth::user()->role;
-        if (!$this->userMenu && $role !== 'admin') {
+        if (!$this->userMenu && ($role !== 'admin' && $role !== 'superadmin')) {
             return true;
         }
         return false;

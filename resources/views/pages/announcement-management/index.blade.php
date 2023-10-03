@@ -54,6 +54,10 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Status
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Action
                                         </th>
                                     </tr>
@@ -71,6 +75,18 @@
                                                 <p class="text-xs text-center font-weight-bold mb-0">
                                                     {{ $announcement->user->nama }}</p>
                                             </td>
+                                            <td>
+                                                <p class="text-xs text-center font-weight-bold mb-0">
+                                                    {{ $announcement->active ? 'Aktif' : 'Nonaktif' }}</p>
+                                            </td>
+                                            @if($menuUrl === 'announcement')
+                                                <td class="text-center">
+                                                    <a href="#" class="mx-3"
+                                                        data-bs-toggle="tooltip" data-bs-original-title="Lihat Pengumuman">
+                                                        <i class="fas fa-eye text-secondary"></i>
+                                                    </a>
+                                                </td>
+                                            @else
                                             <td class="text-center">
                                                 @if ($announcement->user->id === auth()->user()->id)
                                                     <a href="/announcement-management/{{ $announcement->id }}/edit"
@@ -83,6 +99,7 @@
                                                         data-id="{{ $announcement->id }}"></i>
                                                 @endif
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -124,7 +141,7 @@
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: [0, 3],
+                select: [0, 3, 4],
                 sortable: false
             }, ],
             perPageSelect: [10, 25, 50, 100, 200]

@@ -26,6 +26,11 @@
                     'url' => 'bonus',
                 ],
                 [
+                    'label' => 'Pengumuman',
+                    'icon' => 'fa-newspaper',
+                    'url' => 'announcement',
+                ],
+                [
                     'label' => 'Pelatihan',
                     'icon' => 'fa-laptop',
                     'url' => 'training',
@@ -40,6 +45,47 @@
         [
             'section' => 'Menu Admin',
             'role' => 'admin',
+            'menus' => [
+                [
+                    'label' => 'Data Pegawai',
+                    'icon' => 'fa-users',
+                    'url' => 'user-management',
+                ],
+                [
+                    'label' => 'Absensi Pegawai',
+                    'icon' => 'fa-calendar-check',
+                    'url' => 'absence-management',
+                ],
+                [
+                    'label' => 'Lembur Pegawai',
+                    'icon' => 'fa-business-time',
+                    'url' => 'overtime-management',
+                ],
+                [
+                    'label' => 'Bonus Pegawai',
+                    'icon' => 'fa-money-bill',
+                    'url' => 'bonus-management',
+                ],
+                [
+                    'label' => 'Pengumuman',
+                    'icon' => 'fa-newspaper',
+                    'url' => 'announcement-management',
+                ],
+                [
+                    'label' => 'Pelatihan Pegawai',
+                    'icon' => 'fa-laptop',
+                    'url' => 'training-management',
+                ],
+                [
+                    'label' => 'Penggajian Pegawai',
+                    'icon' => 'fa-money-check',
+                    'url' => 'payslip-management',
+                ],
+            ],
+        ],
+        [
+            'section' => 'Menu Admin',
+            'role' => 'superadmin',
             'menus' => [
                 [
                     'label' => 'Data Pegawai',

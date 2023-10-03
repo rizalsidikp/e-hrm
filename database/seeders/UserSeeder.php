@@ -228,7 +228,7 @@ class UserSeeder extends Seeder
                 'gaji' => 4150930,
                 'email' => 'user12@gmail.com',
                 'password' => Hash::make('secret'),
-                'role' => 'user',
+                'role' => 'pengawas',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -490,7 +490,7 @@ class UserSeeder extends Seeder
             'nama' => 'admin',
             'email' => 'admin@softui.com',
             'password' => Hash::make('secret'),
-            'role' => 'admin',
+            'role' => 'superadmin',
             'created_at' => now(),
             'updated_at' => now()
         ]);

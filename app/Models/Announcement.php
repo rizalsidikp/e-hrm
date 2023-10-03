@@ -12,8 +12,10 @@ class Announcement extends Model
     protected $fillable = [
         'user_id',
         'judul',
+        'banner',
         'deskripsi',
         'link',
+        'active'
     ];
 
     public function user()

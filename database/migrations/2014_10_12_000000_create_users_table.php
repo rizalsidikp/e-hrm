@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->enum('status', ["On Job Training", "Kontrak", "Permanen"])->nullable();
             $table->date("mulai_bekerja")->nullable();
             $table->double("gaji")->nullable();
-            $table->enum("role", ["admin", "user", "manajer", "pengawas"]);
+            $table->enum("role", ["superadmin","admin", "user", "manajer", "pengawas"]);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

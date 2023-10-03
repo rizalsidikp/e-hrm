@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('overtime/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime.approved');
 	Route::resource('bonus', \App\Http\Controllers\BonusController::class)->only(['index']);
 	Route::resource('training', \App\Http\Controllers\TrainingController::class)->only(['index']);
+	Route::resource('announcement', \App\Http\Controllers\AnnouncementController::class)->only(['index', 'show']);
 
 
 	//admin route
@@ -41,12 +42,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('bonus-management', \App\Http\Controllers\BonusController::class);
 	Route::put('overtime-management/{id}/approved', [\App\Http\Controllers\OvertimeController::class, 'approved'])->name('overtime-management.approved');
 	Route::resource('announcement-management', \App\Http\Controllers\AnnouncementController::class)->except(['show']);
+	Route::post('announcement-management/banner', [\App\Http\Controllers\AnnouncementController::class, 'uploadBanner'])->name('announcement-management.banner');
 	Route::resource('training-management', \App\Http\Controllers\TrainingController::class)->except(['show']);
 	Route::post('training-management/file', [\App\Http\Controllers\TrainingController::class, 'uploadFile'])->name('training-management.file');
 	Route::resource('payslip-management', \App\Http\Controllers\PaySlipController::class)->only(['index']);
 	Route::get('payslip-management/export', [\App\Http\Controllers\PaySlipController::class, 'export']);
 	Route::get('payslip', [\App\Http\Controllers\PaySlipController::class, 'me']);
 	Route::get('payslip/print', [\App\Http\Controllers\PaySlipController::class, 'print']);
+
 
 
 	// 

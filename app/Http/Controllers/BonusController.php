@@ -21,7 +21,7 @@ class BonusController extends Controller
         $routeName = $currentRoute->getName();
         $routeParts = explode('.', $routeName);
         $this->menuUrl = $routeParts[0];
-        $this->middleware('checkRole:admin')->except(['index']);
+        $this->middleware('checkRole:admin,superadmin')->except(['index']);
         $this->userMenu = $this->menuUrl === 'bonus';
         $this->dataBonus = $this->userMenu ? "Bonus Saya" : "Data Bonus";
         $this->bonusManagementLink = '/' . $this->menuUrl;
@@ -157,7 +157,7 @@ class BonusController extends Controller
     protected function redirectToUserPage()
     {
         $role = Auth::user()->role;
-        if (!$this->userMenu && $role !== 'admin') {
+        if (!$this->userMenu && ($role !== 'admin' && $role !== 'superadmin')) {
             return true;
         }
         return false;

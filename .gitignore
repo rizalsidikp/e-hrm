@@ -3,6 +3,7 @@
 /public/storage
 /public/images/bukti/
 /public/images/pelatihan/
+/public/images/announcement/
 /storage/*.key
 /vendor
 .env

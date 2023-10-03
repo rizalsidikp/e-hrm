@@ -20,7 +20,7 @@ class OvertimeController extends Controller
         $routeParts = explode('.', $routeName);
         $this->menuUrl = $routeParts[0];
 
-        $this->middleware('checkRole:admin,pengawas')->only(['create', 'store']);
+        $this->middleware('checkRole:admin,superadmin,pengawas')->only(['create', 'store']);
         $this->userMenu = $this->menuUrl === 'overtime';
         $this->dataLembur = $this->userMenu ? "Lembur Saya" : "Data Absensi";
         $this->ovetimeManagementLink = '/' . $this->menuUrl;
@@ -90,7 +90,7 @@ class OvertimeController extends Controller
         ];
 
         // Validasi pengawas_id hanya jika user yang sedang login adalah admin
-        if ($userRole === 'admin') {
+        if ($userRole === 'admin' || $userRole === 'superadmin') {
             $rules['pengawas_id'] = $checkUser;
         }
 

@@ -14,8 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('judul');
+            $table->text('banner')->nullable();
             $table->longText('deskripsi');
             $table->text('link')->nullable();
+            $table->boolean('active')->default(true);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();

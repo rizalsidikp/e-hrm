@@ -150,7 +150,7 @@
                 errorPreview.classList.add('dz-error-message');
                 errorPreview.textContent = errorMessage;
                 file.previewElement.appendChild(errorPreview);
-                buktiInput.value = null
+                fileInput.value = null
             });
         }
     });

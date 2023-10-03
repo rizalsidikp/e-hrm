@@ -22,7 +22,7 @@ class UserController extends Controller
     protected $requiredWithDate = "required|date";
     public function __construct()
     {
-        $this->middleware('checkRole:admin');
+        $this->middleware('checkRole:admin,superadmin');
     }
     public function index()
     {
