@@ -1,4 +1,7 @@
 @extends('layouts.user_type.auth')
+@php
+    $roles = ["superadmin", "admin", "manajer", "pengawas", "user"]
+@endphp
 @section('content')
     <div>
         <div class="container-fluid py-4">
@@ -46,6 +49,33 @@
                                     <input class="form-control" type="email" placeholder="@example.com" id="user.email"
                                         name="email" value="{{ old('email', $user->email) }}" required>
                                     @error('email')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="user.username" class="form-control-label">{{ __('Username') }}</label>
+                                    <input class="form-control" type="text" placeholder="username" id="user.username"
+                                        name="username" value="{{ old('username', $user->username) }}" required>
+                                    @error('username')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="user.role"
+                                        class="form-control-label">{{ __('Role') }}</label>
+                                    <select class="form-control" id="user.role" name="role" required>
+                                        @foreach ($roles as $role)
+                                            <option value="{{$role}}"
+                                                {{ old('role', $user->role) === $role ? 'selected' : '' }}>{{ $role }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('role')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -166,21 +196,6 @@
                                     <input class="form-control" type="number" id="user.gaji" name="gaji"
                                         placeholder="4500000" value="{{ old('gaji', $user->gaji) }}" required>
                                     @error('gaji')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user.role"
-                                        class="form-control-label">{{ __('Jadikan Sebagai Admin') }}</label>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" name="role" id="user.role"
-                                            {{ old('role') === 'on' || $user->role === 'admin' ? 'checked' : '' }}>
-                                    </div>
-                                    @error('role')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>

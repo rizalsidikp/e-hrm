@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -61,6 +59,7 @@ class UserController extends Controller
         $request->validate([
             'nama' => 'required|max:100',
             'email' => 'required|email|max:50|unique:users,email',
+            'username'=> 'required',
             'jabatan' => $this->requiredWithMax50,
             'jenis_kelamin' => 'required|in:l,p',
             'tempat_lahir' => $this->requiredWithMax50,
@@ -70,12 +69,13 @@ class UserController extends Controller
             'status' => 'required|in:On Job Training,Kontrak,Permanen',
             'mulai_bekerja' => $this->requiredWithDate,
             'gaji' => 'required|numeric',
-            'role' => 'in:on',
+            'role' => 'in:superadmin,admin,manajer,pengawas,user',
             'password' => 'required|min:8|confirmed'
         ]);
         $user = new User();
         $user->nama = $request->nama;
         $user->email = $request->email;
+        $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->jabatan = $request->jabatan;
         $user->jenis_kelamin = $request->jenis_kelamin;
@@ -86,7 +86,7 @@ class UserController extends Controller
         $user->status = $request->status;
         $user->mulai_bekerja = $request->mulai_bekerja;
         $user->gaji = $request->gaji;
-        $user->role = $request->role ? 'admin' : 'user';
+        $user->role = $request->role;
         $user->save();
 
         return redirect($this->userManagementLink)->with('success', 'Data pegawai berhasil ditambah');
@@ -126,6 +126,7 @@ class UserController extends Controller
         $request->validate([
             'nama' => 'required|max:100',
             'email' => 'required|email|max:50|unique:users,email,' . $id,
+            'username'=> 'required',
             'jabatan' => $this->requiredWithMax50,
             'jenis_kelamin' => 'required|in:l,p',
             'tempat_lahir' => $this->requiredWithMax50,
@@ -135,7 +136,7 @@ class UserController extends Controller
             'status' => 'required|in:On Job Training,Kontrak,Permanen',
             'mulai_bekerja' => $this->requiredWithDate,
             'gaji' => 'required|numeric',
-            'role' => 'in:on',
+            'role' => 'in:superadmin,admin,manajer,pengawas,user',
             'current_password' => 'nullable|string',
             'password' => 'nullable|string|min:8|confirmed',
         ]);
@@ -149,6 +150,7 @@ class UserController extends Controller
         }
         $user->nama = $request->nama;
         $user->email = $request->email;
+        $user->username = $request->username;
         $user->jabatan = $request->jabatan;
         $user->jenis_kelamin = $request->jenis_kelamin;
         $user->tempat_lahir = $request->tempat_lahir;
@@ -158,7 +160,7 @@ class UserController extends Controller
         $user->status = $request->status;
         $user->mulai_bekerja = $request->mulai_bekerja;
         $user->gaji = $request->gaji;
-        $user->role = $request->role ? 'admin' : 'user';
+        $user->role = $request->role;
         $user->save();
 
         return redirect($this->userManagementLink)->with('success', 'Data pegawai berhasil diperbarui.');
