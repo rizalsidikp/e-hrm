@@ -30,6 +30,11 @@
                     'icon' => 'fa-laptop',
                     'url' => 'training',
                 ],
+                [
+                    'label' => 'Payslip',
+                    'icon' => 'fa-file-invoice-dollar',
+                    'url' => 'payslip',
+                ],
             ],
         ],
         [
