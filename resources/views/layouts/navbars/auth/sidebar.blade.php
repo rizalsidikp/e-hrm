@@ -155,7 +155,7 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="align-items-center d-flex m-0 navbar-brand text-wrap" href="/dashboard">
             <img src="{{ asset('assets/img/logo-ct.png') }}" class="navbar-brand-img h-100" alt="...">
-            <span class="ms-3 font-weight-bold">Soft UI Dashboard Laravel</span>
+            <span class="ms-3 font-weight-bold">PT. MULTI GEMA ABADI</span>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
