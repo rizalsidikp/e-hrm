@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('jabatan')->nullable();
@@ -28,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->date("mulai_bekerja")->nullable();
             $table->double("gaji")->nullable();
             $table->enum("role", ["superadmin","admin", "user", "manajer", "pengawas"]);
+            $table->text('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

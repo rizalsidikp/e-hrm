@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 2,
                 'nama' => 'Exsan Fensury',
+                'username'=>'Exsan',
                 'jabatan' => 'Direktur',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Dabo Singkep',
@@ -37,6 +38,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 3,
                 'nama' => 'Elbert Fensury',
+                'username'=>'Elbert',
                 'jabatan' => 'Manager',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Jakarta',
@@ -55,6 +57,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 4,
                 'nama' => 'Alvenia Nur Primadana',
+                'username'=>'Alvenia',
                 'jabatan' => 'Admin',
                 'jenis_kelamin' => 'p',
                 'tempat_lahir' => 'Banyuwangi',
@@ -73,6 +76,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 5,
                 'nama' => 'Muhammad Adam',
+                'username'=>'Adam',
                 'jabatan' => 'Admin',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Palembang',
@@ -91,6 +95,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 6,
                 'nama' => ' Agus Salam Nuryahya',
+                'username'=> 'Agus',
                 'jabatan' => 'Manager/Pengawas',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Kediri',
@@ -109,6 +114,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 7,
                 'nama' => 'Brearton Ivan Haryanto Joel Simanjutank',
+                'username'=>'Brearton',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Medan',
@@ -126,7 +132,8 @@ class UserSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'nama' => ' Sisko Situmeang ',
+                'nama' => 'Sisko Situmeang',
+                'username'=>'Sisko',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Medan',
@@ -145,6 +152,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 9,
                 'nama' => 'Muhamad Rizky',
+                'username'=>'Rizky',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Batam',
@@ -163,6 +171,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 10,
                 'nama' => 'Setiyo Raharjo',
+                'username'=>'Setiyo',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Purwokerto',
@@ -181,6 +190,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 11,
                 'nama' => 'Bobi',
+                'username'=>'Bobi',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Tangga Bosi',
@@ -199,6 +209,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 12,
                 'nama' => 'Wahidah Daulay',
+                'username'=>'Wahidah',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'p',
                 'tempat_lahir' => 'Sungai Salak',
@@ -217,6 +228,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 13,
                 'nama' => 'Richi Renaldy',
+                'username'=>'Richi',
                 'jabatan' => 'Pengawas',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Dabo Singkep',
@@ -235,6 +247,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 14,
                 'nama' => 'Devita Yanti Suryani sitanggang',
+                'username'=>'Devita',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'p',
                 'tempat_lahir' => 'Tebing Tinggi',
@@ -253,6 +266,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 15,
                 'nama' => 'Syammir Walid Daulay',
+                'username'=>'Syammir',
                 'jabatan' => 'Asisten Pengawas',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Binjai',
@@ -271,6 +285,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 16,
                 'nama' => 'Yanto Julius Peni',
+                'username'=>'Yanto',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Kalabahi',
@@ -289,6 +304,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 17,
                 'nama' => 'Zarfin Elisma ',
+                'username'=>'Zarfin',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Pekanbaru',
@@ -307,6 +323,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 18,
                 'nama' => 'Winston Situromang',
+                'username'=>'Winston',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Sibolga',
@@ -325,6 +342,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 19,
                 'nama' => 'Rosalina Lasmaria Siregar',
+                'username'=>'Rosalina',
                 'jabatan' => 'Operator',
                 'jenis_kelamin' => 'p',
                 'tempat_lahir' => 'Batam',
@@ -343,6 +361,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 20,
                 'nama' => 'Rizal',
+                'username'=>'Rizal',
                 'jabatan' => 'Security',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Lampung',
@@ -361,6 +380,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 21,
                 'nama' => 'Boy Arjuna Pakpahan',
+                'username'=>'Boy',
                 'jabatan' => 'Asisten Pengawas',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Medan',
@@ -379,6 +399,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 22,
                 'nama' => 'Solemantang',
+                'username'=>'Solemantang',
                 'jabatan' => 'Penjaga malam',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'NTT',
@@ -397,6 +418,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 23,
                 'nama' => 'Frans',
+                'username'=>'Frans',
                 'jabatan' => 'Maintenance',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'NTT',
@@ -415,6 +437,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 24,
                 'nama' => 'Ribka Tang',
+                'username'=>'Ribka',
                 'jabatan' => 'CS',
                 'jenis_kelamin' => 'p',
                 'tempat_lahir' => 'NTT',
@@ -433,6 +456,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 25,
                 'nama' => 'Pasaribu',
+                'username'=>'Pasaribu',
                 'jabatan' => 'Keamanan',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Mojokerto',
@@ -451,6 +475,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 26,
                 'nama' => 'Simsoon Neferson maro',
+                'username'=>'Simsoon',
                 'jabatan' => 'Penjaga malam',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'NTT',
@@ -469,6 +494,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 27,
                 'nama' => 'Widarda',
+                'username'=>'Widarda',
                 'jabatan' => 'Maintenance',
                 'jenis_kelamin' => 'l',
                 'tempat_lahir' => 'Jakarta',
@@ -488,6 +514,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'id' => 1,
             'nama' => 'admin',
+            'username'=> 'admin',
             'email' => 'admin@softui.com',
             'password' => Hash::make('secret'),
             'role' => 'superadmin',
