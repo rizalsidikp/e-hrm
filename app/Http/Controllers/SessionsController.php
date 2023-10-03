@@ -16,7 +16,7 @@ class SessionsController extends Controller
     public function store()
     {
         $attributes = request()->validate([
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required'
         ]);
 
@@ -25,7 +25,7 @@ class SessionsController extends Controller
             return redirect('dashboard')->with(['success_login' => 'You are logged in.']);
         } else {
 
-            return back()->withErrors(['email' => 'Email or password invalid.']);
+            return back()->withErrors(['username' => 'Username or password invalid.']);
         }
     }
 
