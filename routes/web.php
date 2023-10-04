@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 	//admin route
-	Route::resource('user-management', \App\Http\Controllers\UserController::class)->except(['show']);
+	Route::resource('user-management', \App\Http\Controllers\UserController::class);
 	Route::resource('absence-management', \App\Http\Controllers\AbsenceController::class)->except(['edit', 'update', 'destroy']);
 	Route::post('absence-management/bukti', [\App\Http\Controllers\AbsenceController::class, 'uploadBukti'])->name('absence-management.bukti');
 	Route::put('absence-management/{id}/approved', [\App\Http\Controllers\AbsenceController::class, 'approved'])->name('absence-management.approved');

@@ -1,5 +1,8 @@
 @extends('layouts.user_type.auth')
-
+@php
+    use Illuminate\Support\Facades\Auth;
+    $isAdmin = (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
+@endphp
 @section('content')
     <div>
         <div class="row">
@@ -29,10 +32,12 @@
                             <div>
                                 <h5 class="mb-0">Daftar Pegawai</h5>
                             </div>
+                            @if($isAdmin)
                             <a href="/user-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
                                 Pegawai
                                 Baru</a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -87,12 +92,19 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
+                                                @if($isAdmin)
                                                 <a href="/user-management/{{ $user->id }}/edit" class="mx-3"
                                                     data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                                                     <i class="fas fa-user-edit text-secondary"></i>
                                                 </a>
                                                 <i class="fas fa-trash text-secondary cursor-pointer" data-bs-toggle="modal"
                                                     data-bs-target="#userDeleteModal" data-id="{{ $user->id }}"></i>
+                                                @else
+                                                <a href="/user-management/{{ $user->id }}" class="mx-3"
+                                                    data-bs-toggle="tooltip" data-bs-original-title="Lihat Absensi">
+                                                    <i class="fas fa-eye text-secondary"></i>
+                                                </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

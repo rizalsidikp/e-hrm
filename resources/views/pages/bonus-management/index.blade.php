@@ -1,5 +1,8 @@
 @extends('layouts.user_type.auth')
-
+@php
+    use Illuminate\Support\Facades\Auth;
+    $isAdmin = (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
+@endphp
 @section('content')
     <div>
         <div class="row">
@@ -29,7 +32,7 @@
                             <div>
                                 <h5 class="mb-0">Daftar Bonus Pegawai</h5>
                             </div>
-                            @if ($menuUrl === 'bonus-management')
+                            @if ($menuUrl === 'bonus-management' && $isAdmin)
                             <a href="/bonus-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
                                 Bonus Pegawai Baru</a>

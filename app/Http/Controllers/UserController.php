@@ -20,7 +20,8 @@ class UserController extends Controller
     protected $requiredWithDate = "required|date";
     public function __construct()
     {
-        $this->middleware('checkRole:admin,superadmin');
+        $this->middleware('checkRole:admin,superadmin')->except('index','show');
+        $this->middleware('checkRole:admin,superadmin,manajer')->only('index','show');
     }
     public function index()
     {
@@ -29,8 +30,26 @@ class UserController extends Controller
                 "name" => $this->dataPegawai,
             ]
         ];
-        $users = User::where('id', '!=', 1)->get();
+        $users = User::where('role', '<>', 'superadmin')->get();
         return view('pages.user-management.index', compact('users', 'breadcrumbs'));
+    }
+
+    public function show(string $id){
+        $user = User::find($id);
+        if (!$user) {
+            return redirect($this->userManagementLink)->with('error', $this->notFoundMessage);
+        }
+        $breadcrumbs = [
+            [
+                "name" => $this->dataPegawai,
+                "link" => $this->userManagementLink
+            ],
+            [
+                "name" => $user->nama,
+            ]
+        ];
+
+        return view('pages.user-management.show', compact('user', 'breadcrumbs'));
     }
 
     /**
@@ -106,7 +125,7 @@ class UserController extends Controller
                 "name" => "Ubah Data Pegawai",
             ]
         ];
-        $user = User::where('id', '!=', 1)->find($id);
+        $user = User::where('role', '<>', 'superadmin')->find($id);
         if (!$user) {
             return redirect($this->userManagementLink)->with('error', $this->notFoundMessage);
         }
@@ -119,7 +138,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::where('id', '!=', 1)->find($id);
+        $user = User::where('role', '<>', 'superadmin')->find($id);
         if (!$user) {
             return redirect($this->userManagementLink)->with('error', $this->notFoundMessage);
         }
@@ -171,7 +190,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::where('id', '!=', 1)->find($id);
+        $user = User::where('role', '<>', 'superadmin')->find($id);
         if ($user) {
             $user->delete(); // Soft delete data
             return redirect()->back()->with('success', 'Data pegawai berhasil dihapus.');

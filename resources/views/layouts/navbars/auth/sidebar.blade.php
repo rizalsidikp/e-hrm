@@ -145,6 +145,11 @@
             'role' => 'manajer',
             'menus' => [
                 [
+                    'label' => 'Data Pegawai',
+                    'icon' => 'fa-users',
+                    'url' => 'user-management',
+                ],
+                [
                     'label' => 'Absensi Pegawai',
                     'icon' => 'fa-calendar-check',
                     'url' => 'absence-management',
@@ -153,6 +158,11 @@
                     'label' => 'Persetujuan Lembur',
                     'icon' => 'fa-business-time',
                     'url' => 'overtime-management',
+                ],
+                [
+                    'label' => 'Bonus Pegawai',
+                    'icon' => 'fa-money-bill',
+                    'url' => 'bonus-management',
                 ],
             ],
         ],
