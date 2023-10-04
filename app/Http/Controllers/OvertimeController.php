@@ -68,7 +68,7 @@ class OvertimeController extends Controller
                 "name" => "Pengajuan Baru",
             ]
         ];
-        $users = User::where('id', '!=', '1')->get();
+        $users = User::where('role', '<>', 'superadmin')->get();
         return view('pages.overtime-management.create', compact('breadcrumbs', 'users'));
     }
 

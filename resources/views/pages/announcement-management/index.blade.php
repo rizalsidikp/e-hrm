@@ -29,10 +29,12 @@
                             <div>
                                 <h5 class="mb-0">Daftar Pengumuman</h5>
                             </div>
+                            @if($menuUrl !== 'announcement')
                             <a href="/announcement-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
                                 Pengumuman
                                 Baru</a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">

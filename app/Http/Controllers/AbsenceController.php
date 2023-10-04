@@ -67,7 +67,7 @@ class AbsenceController extends Controller
                 "name" => "Pengajuan Baru",
             ]
         ];
-        $users = User::where('id', '!=', '1')->get();
+        $users = User::where('role', '<>', 'superadmin')->get();
         return view('pages.absence-management.create', compact('breadcrumbs', 'users'))->with('menuUrl', $this->menuUrl);
     }
 

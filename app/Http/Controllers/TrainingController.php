@@ -64,7 +64,7 @@ class TrainingController extends Controller
                 "name" => "Pelatihan Baru",
             ]
         ];
-        $users = User::where('id', '!=', '1')->get();
+        $users = User::where('role', '<>', 'superadmin')->get();
         return view('pages.training-management.create', compact('breadcrumbs', 'users'))->with('menuUrl', $this->menuUrl);
     }
 
@@ -128,7 +128,7 @@ class TrainingController extends Controller
             ]
         ];
         $training = Training::find($id);
-        $users = User::where('id', '!=', '1')->get();
+        $users = User::where('role', '<>', 'superadmin')->get();
         if (!$training) {
             return redirect($this->trainingManagementLink)->with('error', $this->notFoundMessage);
         }

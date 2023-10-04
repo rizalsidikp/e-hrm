@@ -21,7 +21,8 @@ class BonusController extends Controller
         $routeName = $currentRoute->getName();
         $routeParts = explode('.', $routeName);
         $this->menuUrl = $routeParts[0];
-        $this->middleware('checkRole:admin,superadmin')->except(['index']);
+        $this->middleware('checkRole:admin,superadmin')->except(['index', 'show']);
+        $this->middleware('checkRole:admin,superadmin,manajer')->only(['show']);
         $this->userMenu = $this->menuUrl === 'bonus';
         $this->dataBonus = $this->userMenu ? "Bonus Saya" : "Data Bonus";
         $this->bonusManagementLink = '/' . $this->menuUrl;
@@ -48,6 +49,25 @@ class BonusController extends Controller
         return view('pages.bonus-management.index', compact('bonuses', 'breadcrumbs'))->with('menuUrl', $this->menuUrl);
     }
 
+    public function show(string $id){
+        $breadcrumbs = [
+            [
+                "name" => $this->dataBonus,
+                "link" => $this->bonusManagementLink
+            ],
+            [
+                "name" => "Detail Bonus Pegawai",
+            ]
+        ];
+        $bonus = Bonus::find($id);
+        $users = User::where('role', '<>', 'superadmin')->get();
+        if (!$bonus) {
+            return redirect($this->bonusManagementLink)->with('error', $this->notFoundMessage);
+        }
+
+        return view('pages.bonus-management.show', compact('bonus', 'users', 'breadcrumbs'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -63,7 +83,7 @@ class BonusController extends Controller
                 "name" => "Bonus Pegawai Baru",
             ]
         ];
-        $users = User::where('id', '!=', '1')->get();
+        $users = User::where('role', '<>', 'superadmin')->get();
         return view('pages.bonus-management.create', compact('breadcrumbs', 'users'));
     }
 
@@ -106,7 +126,7 @@ class BonusController extends Controller
             ]
         ];
         $bonus = Bonus::find($id);
-        $users = User::where('id', '!=', '1')->get();
+        $users = User::where('role', '<>', 'superadmin')->get();
         if (!$bonus) {
             return redirect($this->bonusManagementLink)->with('error', $this->notFoundMessage);
         }
