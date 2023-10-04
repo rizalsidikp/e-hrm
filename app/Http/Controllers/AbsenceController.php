@@ -33,7 +33,7 @@ class AbsenceController extends Controller
     }
     public function index()
     {
-        if ($this->redirectToUserPage()) {
+        if ($this->redirectUserOnly()) {
             return redirect('/absence');
         }
         $breadcrumbs = [
@@ -212,7 +212,7 @@ class AbsenceController extends Controller
      */
     public function show(string $id)
     {
-        if ($this->redirectToUserPage()) {
+        if ($this->redirectUserOnly()) {
             return redirect('/absence/' . $id);
         }
         $breadcrumbs = [
@@ -240,6 +240,15 @@ class AbsenceController extends Controller
     {
         $role = Auth::user()->role;
         if (!$this->userMenu && ($role !== 'admin' && $role !== 'superadmin')) {
+            return true;
+        }
+        return false;
+    }
+
+    protected function redirectUserOnly()
+    {
+        $role = Auth::user()->role;
+        if (!$this->userMenu && ($role === 'user')) {
             return true;
         }
         return false;

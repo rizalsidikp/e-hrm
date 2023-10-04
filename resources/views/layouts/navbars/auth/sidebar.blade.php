@@ -129,6 +129,11 @@
             'role' => 'pengawas',
             'menus' => [
                 [
+                    'label' => 'Absensi Pegawai',
+                    'icon' => 'fa-calendar-check',
+                    'url' => 'absence-management',
+                ],
+                [
                     'label' => 'Persetujuan Lembur',
                     'icon' => 'fa-business-time',
                     'url' => 'overtime-management',
@@ -139,6 +144,11 @@
             'section' => 'Menu Manajer',
             'role' => 'manajer',
             'menus' => [
+                [
+                    'label' => 'Absensi Pegawai',
+                    'icon' => 'fa-calendar-check',
+                    'url' => 'absence-management',
+                ],
                 [
                     'label' => 'Persetujuan Lembur',
                     'icon' => 'fa-business-time',

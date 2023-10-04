@@ -1,4 +1,8 @@
 @extends('layouts.user_type.auth')
+@php
+    use Illuminate\Support\Facades\Auth;
+    $isAdmin = (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
+@endphp
 @section('content')
     <div>
         <div class="row">
@@ -28,9 +32,11 @@
                             <div>
                                 <h5 class="mb-0">Daftar Izin dan Sakit Pegawai</h5>
                             </div>
+                            @if($menuUrl === 'absence' || ($menuUrl === 'absence-management' && $isAdmin))
                             <a href="/{{ $menuUrl }}/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
                                 Pengajuan Baru</a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -100,11 +106,11 @@
                                             <td>
                                                 @if ($absence->approved === 'butuh persetujuan')
                                                     <div class="text-center">
-                                                        @if ($menuUrl === 'absence-management')
-                                                            <i class="fas fa-check-circle text-success mx-1 @if ($menuUrl === 'absence-management') cursor-pointer @endif"
+                                                        @if ($menuUrl === 'absence-management' && $isAdmin)
+                                                            <i class="fas fa-check-circle text-success mx-1 @if ($menuUrl === 'absence-management' && $isAdmin) cursor-pointer @endif"
                                                                 data-bs-toggle="modal" data-bs-target="#absenceModal"
                                                                 data-id="{{ $absence->id }}" data-approved="disetujui"></i>
-                                                            <i class="fas fa-times-circle text-danger mx-1 @if ($menuUrl === 'absence-management') cursor-pointer @endif"
+                                                            <i class="fas fa-times-circle text-danger mx-1 @if ($menuUrl === 'absence-management' && $isAdmin) cursor-pointer @endif"
                                                                 data-bs-toggle="modal" data-bs-target="#absenceModal"
                                                                 data-id="{{ $absence->id }}" data-approved="ditolak"></i>
                                                         @else
@@ -116,8 +122,8 @@
                                                 @else
                                                     <div class="d-flex justify-content-center text-sm align-items-center">
                                                         <span
-                                                            class="badge badge-sm @if ($absence->approved === 'disetujui') bg-gradient-success @else bg-gradient-warning @endif  @if ($menuUrl === 'absence-management') cursor-pointer @endif"
-                                                            @if ($menuUrl === 'absence-management') data-bs-toggle="modal" data-bs-target="#absenceModal"
+                                                            class="badge badge-sm @if ($absence->approved === 'disetujui') bg-gradient-success @else bg-gradient-warning @endif  @if ($menuUrl === 'absence-management' && $isAdmin) cursor-pointer @endif"
+                                                            @if ($menuUrl === 'absence-management' && $isAdmin) data-bs-toggle="modal" data-bs-target="#absenceModal"
                                                             data-id="{{ $absence->id }}"
                                                             data-approved="butuh persetujuan" @endif>
                                                             {{ $absence->approved }}
@@ -129,9 +135,9 @@
                                                 <div
                                                     class="form-check form-switch d-flex justify-content-center absence_pemotongan">
                                                     <input
-                                                        class="form-check-input absence_pemotongan @if ($menuUrl === 'absence') cursor-default @endif"
+                                                        class="form-check-input absence_pemotongan @if ($menuUrl === 'absence' || ($menuUrl === 'absence-management' && !$isAdmin)) cursor-default @endif"
                                                         type="checkbox"
-                                                        @if ($menuUrl === 'absence-management') data-bs-toggle="modal" data-bs-target="#absencePotonganModal"
+                                                        @if ($menuUrl === 'absence-management' && $isAdmin) data-bs-toggle="modal" data-bs-target="#absencePotonganModal"
                                                         data-id="{{ $absence->id }}"
                                                         data-pemotongan="{{ $absence->pemotongan }}" @endif
                                                         {{ $absence->pemotongan ? 'checked' : '' }}>

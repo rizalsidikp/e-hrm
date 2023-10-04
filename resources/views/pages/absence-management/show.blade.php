@@ -41,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+                    @if($absence->tipe === 'hari')
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -61,6 +62,8 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @if($absence->tipe !== 'hari')
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -71,6 +74,8 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @if($absence->tipe !== 'hari')
                     <div class="row" id="form-jam">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -89,6 +94,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="row">
                         <div class="form-group">
                             <label for="absence.alasan">{{ 'alasan' }}</label>
@@ -164,15 +170,6 @@
                 event.preventDefault()
             })
         })
-    </script>
-    <script>
-        $('#absenceBukti').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget);
-            var image = button.data('image');
-            var modal = $(this);
-            var urlGambar = "{{ asset('') }}" + image;
-            $('#imgAbsenceBukti').attr('src', urlGambar)
-        });
     </script>
     <script>
         $(document).ready(function() {
