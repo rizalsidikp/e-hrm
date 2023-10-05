@@ -55,7 +55,9 @@
                                         </div>
                                     </div>
                                     <input id="announcement.banner" name="banner" type="hidden" value="{{$announcement->banner}}" /><br/>
+                                    @if(!!$announcement->banner)
                                     Banner saat ini : <img src="{{ asset($announcement->banner) }}" alt="banner" style="max-width: 300px" />
+                                    @endif
                                     @error('banner')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -128,6 +130,7 @@
                 toolbar: [
                     [{ header: [1, 2, 3, false] }],
                     ['bold', 'italic', 'underline', 'link'],
+                    [{ 'align': [] }],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }],
                     ['image']
                 ]

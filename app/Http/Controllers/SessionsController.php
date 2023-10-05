@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +11,8 @@ class SessionsController extends Controller
 {
     public function create()
     {
-        return view('session.login-session');
+        $announcements = Announcement::where('active', true)->orderBy('id', 'desc')->limit(8)->get();
+        return view('session.login-session', compact('announcements'));
     }
 
     public function store()

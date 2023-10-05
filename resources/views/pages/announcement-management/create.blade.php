@@ -123,6 +123,7 @@
                 toolbar: [
                     [{ header: [1, 2, 3, false] }],
                     ['bold', 'italic', 'underline', 'link'],
+                    [{ 'align': [] }],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'indent': '-1'}, { 'indent': '+1' }],
                     ['image']
                 ]

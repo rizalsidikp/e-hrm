@@ -87,10 +87,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/logout', [SessionsController::class, 'destroy']);
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store']);
-	Route::get('login', function () {
-		dd("logins");
-		return redirect('/dashboard');
-	})->name('login');
 });
 
 
@@ -104,9 +100,4 @@ Route::group(['middleware' => 'guest'], function () {
 	Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
 	Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
 	Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-
 });
-
-Route::get('/login', function () {
-	return view('session/login-session');
-})->name('login');
