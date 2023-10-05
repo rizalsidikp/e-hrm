@@ -95,6 +95,7 @@
                                             </td>
                                             @if ($menuUrl === 'bonus-management')
                                             <td class="text-center">
+                                                @if($isAdmin)
                                                 <a href="/bonus-management/{{ $bonus->id }}/edit"
                                                     class="mx-1" data-bs-toggle="tooltip"
                                                     data-bs-original-title="Edit Bonus Pegawai">
@@ -103,6 +104,12 @@
                                                 <i class="fas fa-trash text-secondary cursor-pointer mx-1"
                                                     data-bs-toggle="modal" data-bs-target="#userDeleteModal"
                                                     data-id="{{ $bonus->id }}"></i>
+                                                @else
+                                                <a href="/bonus-management/{{ $bonus->id }}" class="mx-3"
+                                                    data-bs-toggle="tooltip" data-bs-original-title="Lihat Absensi">
+                                                    <i class="fas fa-eye text-secondary"></i>
+                                                </a>
+                                                @endif
                                             </td>
                                             @endif
                                         </tr>
