@@ -60,7 +60,7 @@
             <div class="container py-5">
                 <div class="row">
                     <h5 class="text-center mb-4">Pengumuman Terbaru</h5>
-                    @foreach($announcements as $announcement)
+                    @foreach($announcements as $key=> $announcement)
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card card-blog p-2">
                             <div class="position-relative">
@@ -80,7 +80,7 @@
                                     {{$announcement->judul}}
                                 </h5>
                                 <div class="d-flex align-items-end justify-content-end">
-                                    <a href="/announcement/{{$announcement->id}}" class="btn btn-outline-primary btn-sm mb-0 mb-2">Lihat Pengumuman</a>
+                                    <button class="btn btn-outline-primary btn-sm mb-0 mb-2" onclick="onClickCarousel({{$key}})">Lihat Pengumuman</button>
                                 </div>
                             </div>
                         </div>
@@ -91,15 +91,86 @@
             @endif
         </section>
     </main>
+    <div class="modal fade" id="announcementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-normal" id="announcementModalLabel">Modal title</h5>
+                <div style="text-align: end">
+                    <i class="fas fa-chevron-circle-left mx-2" style="font-size: 28px; cursor: pointer;" id="btnPrev"></i>
+                    <i class="fas fa-chevron-circle-right mx-2" style="font-size: 28px; cursor: pointer;" id="btnNext"></i>
+                </div>
+            </div>
+            <div class="modal-body" style="height: 358px; overflow:auto">
+                <div id="carouselAnnouncements" class="carousel slide" >
+                    <div class="carousel-inner">
+                        @foreach($announcements as $key => $announcement)
+                        <div class="carousel-item @if($key === 0) active @endif">
+                            @if(!!$announcement->banner)
+                                <img src="{{ asset($announcement->banner) }}" class="d-block w-100 mb-3" alt="..." style="object-fit:cover; height:320px">
+                            @endif
+                            <div id="deskripsi-{{$announcement->id}}"></div>
+                        </div>
+                        <script>
+                            id = '{{$announcement->id}}'
+                            var quill = new Quill('#deskripsi-'+id, {
+                                readOnly: true,
+                                theme: 'bubble'  // or 'bubble'
+                            });
+                            var editorContent = @json($announcement->deskripsi);
+                            quill.setContents(JSON.parse(editorContent));
+                        </script>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var carousel = null
+        var myModal = null
+        var index = 0
+        var judul = null
+        const announcements = @json($announcements);
+        document.addEventListener('DOMContentLoaded', function () {
+            myModal = new bootstrap.Modal(document.getElementById('announcementModal'));
+            myModal.show();
+
+            carousel = new bootstrap.Carousel(document.getElementById('carouselAnnouncements'), {
+                interval: 0
+            });
+            judul = document.getElementById("announcementModalLabel")
+            judul.textContent = announcements[index].judul
+
+            document.getElementById('btnPrev').addEventListener('click', function (e) {
+                carousel.prev();
+                if(index === 0){
+                    index = announcements.length - 1
+                }else{
+                    index--
+                }
+                judul.textContent = announcements[index].judul
+            });
+
+            document.getElementById('btnNext').addEventListener('click', function () {
+                carousel.next();
+                if(index === (announcements.length - 1)){
+                    index = 0
+                }else{
+                    index++
+                }
+                judul.textContent = announcements[index].judul
+            });
+        });
+        function onClickCarousel(to){
+            carousel.to(to)
+            index = to
+            judul.textContent = announcements[index].judul
+            myModal.show()
+        }
+    </script>
 @endsection
-
-
-{{-- <script>
-    id = '{{$announcement->id}}'
-    var quill = new Quill('#deskripsi-'+id, {
-        readOnly: true,
-        theme: 'bubble'  // or 'bubble'
-    });
-    var editorContent = @json($announcement->deskripsi);
-    quill.setContents(JSON.parse(editorContent));
-</script> --}}
