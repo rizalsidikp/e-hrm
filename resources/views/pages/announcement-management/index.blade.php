@@ -1,6 +1,11 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
+    <style>
+        .ql-container{
+            height: auto !important;
+        }
+    </style>
     <div>
         <div class="row">
             <div class="col-12">
@@ -83,7 +88,7 @@
                                             </td>
                                             @if($menuUrl === 'announcement')
                                                 <td class="text-center">
-                                                    <a href="#" class="mx-3"
+                                                    <a href="#" onclick="onPreviewAnnouncement({{$key}})" class="mx-3"
                                                         data-bs-toggle="tooltip" data-bs-original-title="Lihat Pengumuman">
                                                         <i class="fas fa-eye text-secondary"></i>
                                                     </a>
@@ -136,6 +141,22 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="announcementModal" tabindex="-1" role="dialog" aria-labelledby="announcementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-normal" id="announcementModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body" style="height: 358px; overflow:auto">
+                <img id="banner" class="w-100 mb-3" alt="..." style="object-fit:cover; height:320px">
+                <div id="deskripsi"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('page-content')
     <script type="text/javascript">
@@ -156,5 +177,33 @@
             var modal = $(this);
             modal.find('#user-delete-form').attr('action', 'announcement-management/' + userId);
         });
+    </script>
+    <script>
+        var quill = new Quill('#deskripsi', {
+            readOnly: true,
+            theme: 'bubble'  // or 'bubble'
+        });
+    </script>
+    <script>
+        const announcements = @json($announcements);
+        var myModal = null
+        document.addEventListener('DOMContentLoaded', function () {
+            myModal = new bootstrap.Modal(document.getElementById('announcementModal'));
+        });
+        function onPreviewAnnouncement(index){
+            var baseUrl = window.location.origin;
+            const announcement = announcements[index]
+            var judul = document.getElementById("announcementModalLabel")
+            judul.textContent = announcement.judul
+            var banner = document.getElementById("banner")
+            banner.style.display = 'none'
+            if(!!announcement.banner){
+                banner.style.display = 'block'
+                banner.src = baseUrl + '/' + announcement.banner
+            }
+            var editorContent = announcement.deskripsi;
+            quill.setContents(JSON.parse(editorContent));
+            myModal.show()
+        }
     </script>
 @endsection
