@@ -1,5 +1,8 @@
 @extends('layouts.user_type.auth')
-
+@php
+    use Illuminate\Support\Facades\Auth;
+    $isAdmin = (Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
+@endphp
 @section('content')
     <div>
         <div class="row">
@@ -29,10 +32,12 @@
                             <div>
                                 <h5 class="mb-0">Daftar Pelatihan</h5>
                             </div>
+                            @if ($menuUrl === 'training-management' && $isAdmin)
                             <a href="/training-management/create" class="btn bg-gradient-primary btn-sm mb-0"
                                 type="button">+&nbsp;
                                 Pelatihan
                                 Baru</a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -64,7 +69,7 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Sertifikat
                                         </th>
-                                        @if ($menuUrl === 'training-management')
+                                        @if ($menuUrl === 'training-management' && $isAdmin)
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Action
@@ -103,7 +108,7 @@
                                                     <a href="{{ asset($training->file) }}" download>Download Sertifikat</a>
                                                 </p>
                                             </td>
-                                            @if ($menuUrl === 'training-management')
+                                            @if ($menuUrl === 'training-management' && $isAdmin)
                                                 <td class="text-center">
                                                         <a href="/training-management/{{ $training->id }}/edit"
                                                             class="mx-1" data-bs-toggle="tooltip"
@@ -153,11 +158,12 @@
 @section('page-content')
     <script type="text/javascript">
         const menuUrl = "{{ $menuUrl }}"
+        const isAdmin = "{{ $isAdmin }}"
         const dataTableBasic = new simpleDatatables.DataTable("#datatable-basic", {
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select:  menuUrl === 'training' ? [0, 4, 5] : [0, 4, 5, 6],
+                select:  menuUrl === 'training' || !isAdmin ? [0, 4, 5] : [0, 4, 5, 6],
                 sortable: false
             }, ],
             perPageSelect: [10, 25, 50, 100, 200]

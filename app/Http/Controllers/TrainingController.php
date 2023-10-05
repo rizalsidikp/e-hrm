@@ -196,7 +196,7 @@ class TrainingController extends Controller
     protected function redirectToUserPage()
     {
         $role = Auth::user()->role;
-        if (!$this->userMenu && ($role !== 'admin' && $role !== 'superadmin')) {
+        if (!$this->userMenu && ($role !== 'admin' && $role !== 'superadmin' && $role !== 'manajer')) {
             return true;
         }
         return false;
