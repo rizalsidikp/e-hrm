@@ -164,6 +164,11 @@
                     'icon' => 'fa-money-bill',
                     'url' => 'bonus-management',
                 ],
+                [
+                    'label' => 'Penggajian Pegawai',
+                    'icon' => 'fa-money-check',
+                    'url' => 'payslip-management',
+                ],
             ],
         ],
     ];

@@ -13,6 +13,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PaySlipController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('checkRole:admin,superadmin,manajer')->except('me','print');
+    }
     protected $dataPegawai = "Data Penggajian Pegawai";
     public function index(Request $request)
     {
