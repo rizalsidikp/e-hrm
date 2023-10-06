@@ -124,6 +124,7 @@
                                     </div>
                                 </form>
                             </div>
+                            @if(count($users) > 0)
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <a href="/payslip-management/export?bulan={{$selectedMonth}}&tahun={{$selectedYear}}" class="btn bg-gradient-info mb-0 w-100">
@@ -131,6 +132,7 @@
                                     </a>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0" id="datatable-basic">

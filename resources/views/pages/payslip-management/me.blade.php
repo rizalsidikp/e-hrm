@@ -58,13 +58,16 @@
     $filteredMonths = array_filter($months, function($month) use ($selectedMonth) {
         return $month['value'] == $selectedMonth;
     });
-    $gajiHarian = ((int) $user->gaji / ($totalDate - 4) / 8);
-    $overtime = $gajiHarian * $user->overtime;
-    $absence = $gajiHarian * $user->absence;
-    $bpjs = (2/100) * $user->gaji;
-    $totalGross = (int)($user->gaji + $overtime + $user->bonus);
-    $totalPotongan = (int)($absence + $bpjs);
-    $gajiBersih = $totalGross - $totalPotongan;
+
+    if(!!$user){
+        $gajiHarian = ((int) $user->gaji / ($totalDate - 4) / 8);
+        $overtime = $gajiHarian * $user->overtime;
+        $absence = $gajiHarian * $user->absence;
+        $bpjs = (2/100) * $user->gaji;
+        $totalGross = (int)($user->gaji + $overtime + $user->bonus);
+        $totalPotongan = (int)($absence + $bpjs);
+        $gajiBersih = $totalGross - $totalPotongan;
+    }
 @endphp
 @section('content')
     <div>
@@ -134,6 +137,7 @@
                                     </div>
                                 </form>
                             </div>
+                            @if(!!$user)
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <a href="/payslip/print?bulan={{$selectedMonth}}&tahun={{$selectedYear}}" class="btn bg-gradient-info mb-0 w-100">
@@ -141,8 +145,10 @@
                                     </a>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         <div class="row justify-content-center mb-4">
+                            @if(!!$user)
                             <div class="col-md-8" style="border:1px solid #000">
                                 <div class="row">
                                     <div class="col-md-12 text-center p-2" style="border-bottom: 1px solid #000">
@@ -241,6 +247,11 @@
                                     </div>
                                 </div>
                             </div>
+                            @else
+                            <div class="col-md-8 p-5 text-center">
+                                Data Belum Tersedia
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
