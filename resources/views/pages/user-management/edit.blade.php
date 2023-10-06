@@ -1,6 +1,6 @@
 @extends('layouts.user_type.auth')
 @php
-    $roles = ["superadmin", "admin", "manajer", "pengawas", "user"]
+    $roles = ["admin", "manajer", "pengawas", "user"]
 @endphp
 @section('content')
     <div>
@@ -10,7 +10,7 @@
                     <h6 class="mb-0">{{ __('Informasi Pegawai') }}</h6>
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <form action="/user-management/{{ $user->id }}" method="POST" role="form text-left">
+                    <form action="/user-management/{{ $user->id }}" method="POST" role="form text-left" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         @if ($errors->any() || session('error'))
@@ -32,6 +32,20 @@
                                 </button>
                             </div>
                         @endif
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div>
+                                    <label for="user.photo" class="form-control-label">{{ __('Photo Pegawai') }}</label>
+                                </div>
+                                <div class="avatar avatar-xl position-relative">
+                                    <img src="@if($user->photo) {{ asset($user->photo) }} @else {{ asset('assets/img/default-user-image.png') }} @endif" alt="..." class="w-100 border-radius-lg shadow-sm" id="avatar-preview" style="height: 100%;object-fit: cover;">
+                                    <a id="edit-avatar" href="javascript:;" class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2">
+                                        <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Photo" style="font-size: 10px"></i>
+                                    </a>
+                                    <input type="file" name="photo" id="avatar-input" style="display: none" accept="image/*" value="{{ old('photo') }}">
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -254,5 +268,38 @@
             });
         }
     </script>
+    <script>
+        $(document).ready(function() {
+           $('#edit-avatar').click(function() {
+               $('#avatar-input').click();
+           });
+           $('#avatar-input').change(function() {
+               const input = this;
+   
+               if (input.files && input.files[0]) {
+                   const reader = new FileReader();
+   
+                   reader.onload = function(e) {
+                       // Mengganti src gambar dengan data URL dari gambar yang dipilih
+                       $('#avatar-preview').attr('src', e.target.result);
+                   };
+   
+                   reader.readAsDataURL(input.files[0]);
+               }
+            });
+           // Memeriksa apakah ada gambar yang dipilih saat halaman dimuat
+            const initialAvatar = $('#avatar-input').prop('files')[0];
+            if (initialAvatar) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Mengganti src gambar dengan data URL dari gambar yang sudah dipilih sebelumnya
+                    $('#avatar-preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(initialAvatar);
+            }
+       });
+   </script>
 @endsection
 

@@ -61,6 +61,23 @@ class DashboardController extends Controller
         $user->tanggal_lahir = $request->tanggal_lahir;
         $user->alamat = $request->alamat;
         $user->no_hp = $request->no_hp;
+        if ($request->hasFile('photo')) {
+            $folderPath = public_path('images/photo');
+
+            // Cek apakah folder sudah ada, jika tidak, buat folder
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath, 0755, true);
+            }
+
+            $photo = $request->file('photo');
+            $photoName = 'photo_' . $user->id . '.' . $photo->getClientOriginalExtension();
+
+            // Pindahkan gambar photo baru ke direktori yang diinginkan
+            $photo->move($folderPath, $photoName);
+
+            // Update nama file photo di database atau sesuai dengan kebutuhan Anda
+            $user->photo = 'images/photo/' . $photoName;
+        }
         $user->save();
 
         return redirect('dashboard')->with('success', 'Informasi data diri berhasil diperbarui');

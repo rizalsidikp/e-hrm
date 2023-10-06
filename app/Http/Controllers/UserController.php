@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -108,6 +109,25 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->save();
 
+        if ($request->hasFile('photo')) {
+            $folderPath = public_path('images/photo');
+
+            // Cek apakah folder sudah ada, jika tidak, buat folder
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath, 0755, true);
+            }
+
+            $photo = $request->file('photo');
+            $photoName = 'photo_' . $user->id . '.' . $photo->getClientOriginalExtension();
+
+            // Pindahkan gambar photo baru ke direktori yang diinginkan
+            $photo->move($folderPath, $photoName);
+
+            // Update nama file photo di database atau sesuai dengan kebutuhan Anda
+            $user->photo = 'images/photo/' . $photoName;
+            $user->save();
+        }
+
         return redirect($this->userManagementLink)->with('success', 'Data pegawai berhasil ditambah');
     }
 
@@ -167,6 +187,25 @@ class UserController extends Controller
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
+
+        if ($request->hasFile('photo')) {
+            $folderPath = public_path('images/photo');
+
+            // Cek apakah folder sudah ada, jika tidak, buat folder
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath, 0755, true);
+            }
+
+            $photo = $request->file('photo');
+            $photoName = 'photo_' . $user->id . '.' . $photo->getClientOriginalExtension();
+
+            // Pindahkan gambar photo baru ke direktori yang diinginkan
+            $photo->move($folderPath, $photoName);
+
+            // Update nama file photo di database atau sesuai dengan kebutuhan Anda
+            $user->photo = 'images/photo/' . $photoName;
+        }
+
         $user->nama = $request->nama;
         $user->email = $request->email;
         $user->username = $request->username;

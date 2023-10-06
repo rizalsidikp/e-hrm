@@ -4,6 +4,7 @@
 /public/images/bukti/
 /public/images/pelatihan/
 /public/images/announcement/
+/public/images/photo/
 /storage/*.key
 /vendor
 .env

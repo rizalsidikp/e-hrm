@@ -138,13 +138,14 @@
         const announcements = @json($announcements);
         document.addEventListener('DOMContentLoaded', function () {
             myModal = new bootstrap.Modal(document.getElementById('announcementModal'));
-            myModal.show();
-
-            carousel = new bootstrap.Carousel(document.getElementById('carouselAnnouncements'), {
-                interval: 0
-            });
-            judul = document.getElementById("announcementModalLabel")
-            judul.textContent = announcements[index].judul
+            if(announcements.length > 0){
+                myModal.show();
+                    carousel = new bootstrap.Carousel(document.getElementById('carouselAnnouncements'), {
+                    interval: 0
+                });
+                judul = document.getElementById("announcementModalLabel")
+                judul.textContent = announcements[index].judul
+            }
 
             document.getElementById('btnPrev').addEventListener('click', function (e) {
                 carousel.prev();

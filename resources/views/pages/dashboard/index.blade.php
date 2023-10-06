@@ -1,60 +1,61 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
-            <span class="mask bg-gradient-primary opacity-6"></span>
-        </div>
-        <div class="card card-body blur shadow-blur mx-4 mt-n6">
-            <div class="row gx-4">
-                <div class="col-auto">
-                    <div class="avatar avatar-xl position-relative">
-                        <img src="../assets/img/bruce-mars.jpg" alt="..." class="w-100 border-radius-lg shadow-sm">
-                        <a href="javascript:;" class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2">
-                            <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Image"></i>
-                        </a>
+    <form action="/dashboard/{{ $user->id }}" method="POST" role="form text-left" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        @if ($errors->any() || session('error'))
+            <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
+                <span class="alert-text text-white">
+                    {{ $errors->any() ? $errors->first() : session('error') }}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <i class="fa fa-close" aria-hidden="true"></i>
+                </button>
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="m-3  alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
+                <span class="alert-text text-white">
+                    {{ session('success') }}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <i class="fa fa-close" aria-hidden="true"></i>
+                </button>
+            </div>
+        @endif
+        <div class="container-fluid">
+            <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('../assets/img/curved-images/curved0.jpg'); background-position-y: 50%;">
+                <span class="mask bg-gradient-primary opacity-6"></span>
+            </div>
+            <div class="card card-body blur shadow-blur mx-4 mt-n6">
+                <div class="row gx-4">
+                    <div class="col-auto">
+                        <div class="avatar avatar-xl position-relative">
+                            <img src="@if($user->photo) {{ asset($user->photo) }} @else {{ asset('assets/img/default-user-image.png') }} @endif" alt="..." class="w-100 border-radius-lg shadow-sm" id="avatar-preview" style="height: 100%;object-fit: cover;">
+                            <a id="edit-avatar" href="javascript:;" class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2">
+                                <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Photo" style="font-size: 10px"></i>
+                            </a>
+                            <input type="file" name="photo" id="avatar-input" style="display: none" accept="image/*">
+                        </div>
                     </div>
-                </div>
-                <div class="col-auto my-auto">
-                    <div class="h-100">
-                        <h5 class="mb-1">
-                            {{ __($user->nama) }}
-                        </h5>
-                        <p class="mb-0 font-weight-bold text-sm">
-                            {{ __($user->jabatan) }}
-                        </p>
+                    <div class="col-auto my-auto">
+                        <div class="h-100">
+                            <h5 class="mb-1">
+                                {{ __($user->nama) }}
+                            </h5>
+                            <p class="mb-0 font-weight-bold text-sm">
+                                {{ __($user->jabatan) }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid py-4">
-        <div class="card">
-            <div class="card-header pb-0 px-3">
-                <h6 class="mb-0">{{ __('Informasi Data Diri') }}</h6>
-            </div>
-            <div class="card-body pt-4 p-3">
-                <form action="/dashboard/{{ $user->id }}" method="POST" role="form text-left">
-                    @csrf
-                    @method('PUT')
-                    @if ($errors->any() || session('error'))
-                        <div class="mt-3  alert alert-primary alert-dismissible fade show" role="alert">
-                            <span class="alert-text text-white">
-                                {{ $errors->any() ? $errors->first() : session('error') }}</span>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                <i class="fa fa-close" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    @endif
-                    @if (session('success'))
-                        <div class="m-3  alert alert-success alert-dismissible fade show" id="alert-success" role="alert">
-                            <span class="alert-text text-white">
-                                {{ session('success') }}</span>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                <i class="fa fa-close" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    @endif
+        <div class="container-fluid py-4">
+            <div class="card">
+                <div class="card-header pb-0 px-3">
+                    <h6 class="mb-0">{{ __('Informasi Data Diri') }}</h6>
+                </div>
+                <div class="card-body pt-4 p-3">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -255,10 +256,31 @@
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Simpan' }}</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 @endsection
-@push('dashboard')
-@endpush
+@section('page-content')
+<script>
+     $(document).ready(function() {
+        $('#edit-avatar').click(function() {
+            $('#avatar-input').click();
+        });
+        $('#avatar-input').change(function() {
+            const input = this;
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Mengganti src gambar dengan data URL dari gambar yang dipilih
+                    $('#avatar-preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+</script>
+@endsection
