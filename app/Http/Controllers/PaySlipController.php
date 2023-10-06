@@ -98,8 +98,7 @@ class PaySlipController extends Controller
             'selectedYear' => $selectedYear,
             'totalDate' => $totalDate
         ]);
-        //mendownload laporan.pdf
-    	return $data->download('laporan.pdf');
+    	return $data->download("payslip-$user->nama-$selectedMonth-$selectedYear.pdf");
     }
 
     /**
