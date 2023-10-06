@@ -14,12 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-
-@if (\Request::is('rtl'))
-    <html dir="rtl" lang="ar">
-@else
-    <html lang="en">
-@endif
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />

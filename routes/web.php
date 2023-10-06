@@ -1,10 +1,6 @@
 <?php
 
-use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InfoUserController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,54 +46,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('payslip', [\App\Http\Controllers\PaySlipController::class, 'me']);
 	Route::get('payslip/print', [\App\Http\Controllers\PaySlipController::class, 'print']);
 
-
-
-	// 
-
 	Route::get('/', [HomeController::class, 'home']);
 
-	Route::get('billing', function () {
-		return view('billing');
-	})->name('billing');
-
-	Route::get('profile', function () {
-		return view('profile');
-	})->name('profile');
-
-	Route::get('rtl', function () {
-		return view('rtl');
-	})->name('rtl');
-
-	Route::get('tables', function () {
-		return view('tables');
-	})->name('tables');
-
-	Route::get('virtual-reality', function () {
-		return view('virtual-reality');
-	})->name('virtual-reality');
-
-	Route::get('static-sign-in', function () {
-		return view('static-sign-in');
-	})->name('sign-in');
-
-	Route::get('static-sign-up', function () {
-		return view('static-sign-up');
-	})->name('sign-up');
-
 	Route::get('/logout', [SessionsController::class, 'destroy']);
-	Route::get('/user-profile', [InfoUserController::class, 'create']);
-	Route::post('/user-profile', [InfoUserController::class, 'store']);
 });
 
 
 
 Route::group(['middleware' => 'guest'], function () {
-	Route::get('/register', [RegisterController::class, 'create']);
-	Route::post('/register', [RegisterController::class, 'store']);
 	Route::get('/login', [SessionsController::class, 'create'])->name('login');
 	Route::post('/session', [SessionsController::class, 'store']);
-	Route::get('/login/forgot-password', [ResetController::class, 'create']);
-	Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
-	Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
-	Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
 });
