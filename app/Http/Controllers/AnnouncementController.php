@@ -109,7 +109,7 @@ class AnnouncementController extends Controller
         $announcement = new Announcement($data);
         $announcement->save();
 
-        return redirect($this->announcementManagementLink)->with('success', 'Data pegawai berhasil ditambah');
+        return redirect($this->announcementManagementLink)->with('success', 'Data pengumuman berhasil ditambah');
     }
 
     /**
