@@ -64,12 +64,10 @@
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Deskripsi
                                         </th>
-                                        @if ($menuUrl === 'bonus-management')
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Action
                                         </th>
-                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -154,7 +152,7 @@
             searchable: true,
             fixedHeight: true,
             columns: [{
-                select: menuUrl === 'bonus' ?  [0, 1, 4] : [0, 4, 5],
+                select: [0, 4, 5],
                 sortable: false
             }, ],
             perPageSelect: [10, 25, 50, 100, 200]
