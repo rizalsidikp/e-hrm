@@ -22,7 +22,7 @@ class OvertimeController extends Controller
 
         $this->middleware('checkRole:admin,superadmin,pengawas')->only(['create', 'store']);
         $this->userMenu = $this->menuUrl === 'overtime';
-        $this->dataLembur = $this->userMenu ? "Lembur Saya" : "Data Absensi";
+        $this->dataLembur = $this->userMenu ? "Lembur Saya" : "Data Lembur";
         $this->ovetimeManagementLink = '/' . $this->menuUrl;
     }
 
