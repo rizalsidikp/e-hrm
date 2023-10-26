@@ -136,7 +136,7 @@ class OvertimeController extends Controller
                 "link" => $this->ovetimeManagementLink
             ],
             [
-                "name" => "Detail Pengajuan Izin & Sakit",
+                "name" => "Detail Pengajuan Lembur",
             ]
         ];
         $overtime = Overtime::find($id);

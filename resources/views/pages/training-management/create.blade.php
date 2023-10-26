@@ -174,4 +174,10 @@
         }
     }
 </script>
+<script type="text/javascript">
+    if (document.getElementById('training.user_id')) {
+        var element = document.getElementById('training.user_id');
+        const example = new Choices(element, {});
+    }
+</script>
 @endsection

@@ -170,7 +170,7 @@
 @section('page-content')
 <script type="text/javascript">
     if (document.getElementById('bonus.user_id')) {
-        var element = document.getElementById('absence.user_id');
+        var element = document.getElementById('bonus.user_id');
         const example = new Choices(element, {});
     }
 </script>
