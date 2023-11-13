@@ -109,17 +109,21 @@
                                         <select class="form-control custom-disabled" id="overtime.pengawas_id"
                                             name="pengawas_id" disabled>
                                             @foreach ($users as $key => $user)
+                                                @if($user->role === 'pengawas')
                                                 <option value="{{ $user->id }}"
                                                     {{ auth()->user()->id === $user->id ? 'selected' : '' }}>
                                                     {{ $user->nama }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     @else
                                         <select class="form-control" id="overtime.pengawas_id" name="pengawas_id" required>
                                             @foreach ($users as $key => $user)
+                                                @if($user->role === 'pengawas')
                                                 <option value="{{ $user->id }}"
                                                     {{ (int) old('pengawas_id') === $user->id ? 'selected' : '' }}>
                                                     {{ $user->nama }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     @endif
@@ -134,9 +138,11 @@
                                         class="form-control-label">{{ __('Nama Manajer') }}</label>
                                     <select class="form-control" id="overtime.manajer_id" name="manajer_id" required>
                                         @foreach ($users as $key => $user)
+                                            @if($user->role === 'manajer')
                                             <option value="{{ $user->id }}"
                                                 {{ (int) old('manajer_id') === $user->id ? 'selected' : '' }}>
                                                 {{ $user->nama }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('manajer_id')
