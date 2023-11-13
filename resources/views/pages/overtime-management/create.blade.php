@@ -171,6 +171,8 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
+                            <button type="submit" id="backButton"
+                                  class="btn bg-gradient-secondary btn-md mt-4 mb-4 mx-4">{{ 'Kembali' }}</button>
                             <button type="submit"
                                 class="btn bg-gradient-dark btn-md mt-4 mb-4">{{ 'Simpan' }}</button>
                         </div>
@@ -213,5 +215,12 @@
                 minuteIncrement: 0
             });
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#backButton').click(function() {
+                window.history.back();
+            });
+        });
     </script>
 @endsection

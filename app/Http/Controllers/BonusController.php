@@ -22,7 +22,6 @@ class BonusController extends Controller
         $routeParts = explode('.', $routeName);
         $this->menuUrl = $routeParts[0];
         $this->middleware('checkRole:admin,superadmin')->except(['index', 'show']);
-        $this->middleware('checkRole:admin,superadmin,manajer')->only(['show']);
         $this->userMenu = $this->menuUrl === 'bonus';
         $this->dataBonus = $this->userMenu ? "Bonus Saya" : "Data Bonus";
         $this->bonusManagementLink = '/' . $this->menuUrl;
