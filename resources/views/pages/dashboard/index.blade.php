@@ -260,6 +260,22 @@
             </div>
         </div>
     </form>
+    @php
+        $active = false;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'label' => 'Dashboard',
+            'icon' => 'fa-home',
+            'url' => 'dashboard',
+        ];
+        if(in_array($data, $favorites)){
+            $active = true;
+        }
+    @endphp
+    @include('components.fixed-plugin', [
+        'active' => $active,
+        ...$data
+    ])
 @endsection
 @section('page-content')
 <script>

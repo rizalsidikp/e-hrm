@@ -112,6 +112,22 @@
             </div>
         </div>
     </div>
+    @php
+        $active = false;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'label' => 'Pelatihan Pegawai Baru',
+            'icon' => 'fa-laptop',
+            'url' => 'training-management/create',
+        ];
+        if(in_array($data, $favorites)){
+            $active = true;
+        }
+    @endphp
+    @include('components.fixed-plugin', [
+        'active' => $active,
+        ...$data
+    ])
 @endsection
 @section('page-content')
 <script type="text/javascript">

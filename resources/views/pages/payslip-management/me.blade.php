@@ -258,6 +258,22 @@
             </div>
         </div>
     </div>
+    @php
+        $active = false;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'label' => 'Payslip',
+            'icon' => 'fa-file-invoice-dollar',
+            'url' => 'payslip',
+        ];
+        if(in_array($data, $favorites)){
+            $active = true;
+        }
+    @endphp
+    @include('components.fixed-plugin', [
+        'active' => $active,
+        ...$data
+    ])
 @endsection
 @section('page-content') 
 @endsection

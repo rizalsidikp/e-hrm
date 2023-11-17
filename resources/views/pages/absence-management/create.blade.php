@@ -200,6 +200,22 @@
              </div>
          </div>
      </div>
+     @php
+        $active = false;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'label' => $menuUrl === 'absence' ? 'Pengajuan Absensi' : 'Absensi Pegawai Baru',
+            'icon' => $menuUrl === 'absence' ? 'fa-calendar-minus' : 'fa-calendar-check',
+            'url' => $menuUrl.'/create',
+        ];
+        if(in_array($data, $favorites)){
+            $active = true;
+        }
+    @endphp
+    @include('components.fixed-plugin', [
+        'active' => $active,
+        ...$data
+    ])
  @endsection
  @section('page-content')
      <script type="text/javascript">

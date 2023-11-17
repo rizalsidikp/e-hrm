@@ -17,3 +17,39 @@
 .cursor-default{
     cursor: default !important;
 }
+.favorite{
+    border-radius: 40px !important;
+    background-color: transparent !important;
+    width: 52px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.favorite-text{
+    background-color: #fff;
+    font-size: 14px;
+    border-radius: 40px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 20px;
+    padding-right: 48px;
+    width: 224px;
+    height: 52px;
+}
+.favorite-icon{
+    background-color: #fff;
+    top:0;
+    right: 0;
+    border-radius: 50%;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+    border: none;
+}
+.favorite-icon-color{
+    color: #B8B8B8;
+}
+.favorite-active{
+    color: #d4af37;
+}
+.favorite:hover{
+    width: 224px;
+}

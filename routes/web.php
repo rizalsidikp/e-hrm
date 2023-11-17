@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('bonus', \App\Http\Controllers\BonusController::class)->only(['index']);
 	Route::resource('training', \App\Http\Controllers\TrainingController::class)->only(['index']);
 	Route::resource('announcement', \App\Http\Controllers\AnnouncementController::class)->only(['index', 'show']);
+	Route::resource('favorite', \App\Http\Controllers\FavoriteController::class)->only(['store', 'destroy']);
 
 
 	//admin route

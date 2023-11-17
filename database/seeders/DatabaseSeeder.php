@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             OvertimeSeeder::class,
             BonusSeeder::class,
             TrainingSeeder::class,
+            FavoriteSeeder::class,
         ]);
     }
 }

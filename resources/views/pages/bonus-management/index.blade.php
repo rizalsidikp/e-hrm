@@ -142,6 +142,22 @@
             </div>
         </div>
     </div>
+    @php
+        $active = false;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'label' => $menuUrl === 'bonus' ? 'Bonus' : 'Bonus Pegawai',
+            'icon' => $menuUrl === 'bonus' ? 'fa-gifts' : 'fa-money-bill',
+            'url' => $menuUrl,
+        ];
+        if(in_array($data, $favorites)){
+            $active = true;
+        }
+    @endphp
+    @include('components.fixed-plugin', [
+        'active' => $active,
+        ...$data
+    ])
 @endsection
 @section('page-content')
     <script type="text/javascript">

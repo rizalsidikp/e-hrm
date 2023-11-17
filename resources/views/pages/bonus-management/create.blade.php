@@ -168,6 +168,22 @@
             </div>
         </div>
     </div>
+    @php
+        $active = false;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'label' => 'Bonus Pegawai Baru',
+            'icon' => 'fa-money-bill',
+            'url' => 'bonus-management/create',
+        ];
+        if(in_array($data, $favorites)){
+            $active = true;
+        }
+    @endphp
+    @include('components.fixed-plugin', [
+        'active' => $active,
+        ...$data
+    ])
 @endsection
 @section('page-content')
 <script type="text/javascript">

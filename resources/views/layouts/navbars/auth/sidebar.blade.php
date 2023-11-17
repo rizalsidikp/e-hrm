@@ -2,7 +2,7 @@
     use Illuminate\Support\Facades\Auth;
     $sectionMenu = [
         [
-            'section' => '',
+            'section' => 'Main Menu',
             'role' => 'user',
             'menus' => [
                 [
@@ -177,6 +177,13 @@
             ],
         ],
     ];
+    if($favorites){
+        array_unshift($sectionMenu, [
+            'section' => 'Favorite Pages',
+            'role' => Auth::user()->role,
+            'menus' => $favorites
+        ]);
+    }
 @endphp
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-white "
     id="sidenav-main" style="height: 96vh">
@@ -200,12 +207,12 @@
                     </li>
                     @foreach ($section['menus'] as $menu)
                         <li class="nav-item pb-2">
-                            <a class="nav-link {{ Request::segment(1) === $menu['url'] ? 'active' : '' }}"
+                            <a class="nav-link {{ (count(Request::segments()) > 1 && Request::segment(1).'/'.Request::segment(2) === $menu['url']) || (count(Request::segments()) === 1 && Request::segment(1) === $menu['url']) ? 'active' : '' }}"
                                 href="{{ url($menu['url']) }}">
                                 <div
                                     class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                                     <i style="font-size: 1rem;"
-                                        class="fas custom-i-sm fa-lg {{ $menu['icon'] }} ps-2 pe-2 text-center text-dark {{ Request::segment(1) === $menu['url'] ? 'text-white' : 'text-dark' }} "
+                                        class="fas custom-i-sm fa-lg {{ $menu['icon'] }} ps-2 pe-2 text-center text-dark {{ (count(Request::segments()) > 1 && Request::segment(1).'/'.Request::segment(2) === $menu['url']) || (count(Request::segments()) === 1 && Request::segment(1) === $menu['url']) ? 'text-white' : 'text-dark' }} "
                                         aria-hidden="true"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">{{ $menu['label'] }}</span>

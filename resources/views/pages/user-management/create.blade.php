@@ -245,6 +245,22 @@
             </div>
         </div>
     </div>
+    @php
+        $active = false;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'label' => 'Data Pegawai Baru',
+            'icon' => 'fa-users',
+            'url' => 'user-management/create',
+        ];
+        if(in_array($data, $favorites)){
+            $active = true;
+        }
+    @endphp
+    @include('components.fixed-plugin', [
+        'active' => $active,
+        ...$data
+    ])
 @endsection
 @section('page-content')
     <script>

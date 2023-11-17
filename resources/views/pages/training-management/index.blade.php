@@ -154,6 +154,22 @@
             </div>
         </div>
     </div>
+    @php
+        $active = false;
+        $data = [
+            'user_id' => Auth::user()->id,
+            'label' => $menuUrl === 'training' ? 'Pelatihan' : 'Pelatihan Pegawai',
+            'icon' => 'fa-laptop',
+            'url' => $menuUrl,
+        ];
+        if(in_array($data, $favorites)){
+            $active = true;
+        }
+    @endphp
+    @include('components.fixed-plugin', [
+        'active' => $active,
+        ...$data
+    ])
 @endsection
 @section('page-content')
     <script type="text/javascript">
