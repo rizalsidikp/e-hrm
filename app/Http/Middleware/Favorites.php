@@ -16,8 +16,11 @@ class Favorites
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $favorites = Favorite::select('user_id', 'label', 'icon', 'url')->where("user_id", auth()->user()->id)->orderBy('id', 'desc')->get()->toArray();
-        view()->share('favorites', $favorites);
+        if(auth() && auth()->user()){
+            $favorites = Favorite::select('user_id', 'label', 'icon', 'url')->where("user_id", auth()->user()->id)->orderBy('id', 'desc')->get()->toArray();
+            view()->share('favorites', $favorites);
+            return $next($request);
+        }
         return $next($request);
     }
 }
