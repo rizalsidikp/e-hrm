@@ -91,7 +91,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <span
-                                                    class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($absence->tanggal_izin)->format('d F Y') }}
+                                                    class="text-secondary text-xs font-weight-bold">{{ \Carbon\Carbon::parse($absence->tanggal_mulai)->format('d F Y') }}
                                                 </span>
                                             </td>
                                             <td style="padding-left: 1.5rem">
