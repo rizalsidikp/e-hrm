@@ -2,7 +2,7 @@
     use Illuminate\Support\Facades\Auth;
     $sectionMenu = [
         [
-            'section' => 'Main Menu',
+            'section' => 'Menu Utama',
             'role' => 'user',
             'menus' => [
                 [
@@ -179,7 +179,7 @@
     ];
     if($favorites){
         array_unshift($sectionMenu, [
-            'section' => 'Favorite Pages',
+            'section' => 'Menu Favorit',
             'role' => Auth::user()->role,
             'menus' => $favorites
         ]);
